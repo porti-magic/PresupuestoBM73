@@ -1,0 +1,155 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+<script type="module" src="~/js/Index.js" asp-append-version="true"></script>
+
+<main>
+    <section class="datagroup" id="Contact">
+        <h3>Contacto</h3>
+        <form>
+            @*<script type="module" src="~/js/Contact.js" asp-append-version="true"></script>*@
+            <label for="fname">Nombre:</label>
+            <input placeholder="Nombre" id="fname" name="Nombre" />
+            <label for="lname">Apellido:</label>
+            <input placeholder="Apellido" id="lname" name="Apellido" />
+            <label for="adress">Dirección:</label>
+            <input placeholder="Dirección" id="adress" name="Direccion" />
+            <label for="date">Fecha: </label>
+            <input id="date" type="date" />
+            <section id="startField">
+                <label for="start">Inicio: </label>
+                <input id="start" type="time" />
+            </section>
+            <section id="endField">
+                <label for="end">Final: </label>
+                <input id="end" type="time" />
+            </section>
+
+        </form>
+    </section>
+    <section class="datagroup" id="General">
+        <h3>General</h3>
+        <form>
+            @*<script type="module" src="~/js/General.js" asp-append-version="true"></script>*@
+            <label for="personas">Cantidad de personas:</label>
+            <input id="personas" name="Personas" type="number" min=20 max=1000 value="20" />
+            <label for="TragosPAX">Tragos PAX:</label>
+            <input id="TragosPAX" name="TragosPAX" type="number" value="10" min=1 max=20 />
+            <P>Tragos totales:</p>
+            <p id="TragosTotales"></p>
+            <p>Tragos por tipo:</p>
+            <p id="TragosPorTipo" class="DefaultTragosPorTipo"></p>
+        </form>
+    </section>
+    <section class="datagroup" id="Menu">
+        <h3>Carta</h3>
+        <div>
+            <label for="carta">Carta: </label>
+            <select id="carta">
+                @foreach (var carta in Model.cartas)
+                {
+                    <option value=@carta.ID >@carta.Name</option>
+                }
+            </select>
+            <table id="MenuTable" class="DataTable">
+                <thead>
+                    <tr>
+                        <th class="TragoCol">Trago</th>
+                        <th class="DefaultCol">Default</th>
+                        <th class="CantidadCol">Adjusted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var tragoId in Model.cartas.First().Drinks)
+                    {
+                        <tr id="@tragoId">
+                            <td>@Model.GetTrago(tragoId).Name</td>
+                            <td class="DefaultTragosPorTipo"></td>
+                            <td class="CantidadCol">
+                                <input class="Cantidad_Trago" type = "number" min = "1" max = "9999" onchange = "SetTotalAdjustedDrinks()"/>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td id="TotalDefaultDrinks">200</td>
+                        <td id="TotalAdjustedDrinks">0</td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <button class="CartaCustom" id="agregarTrago" hidden="@Model.cartas.First().ID != 3">Agregar Trago</button>
+        </div>
+    </section>
+    <section class="datagroup">
+        <h3>Costos</h3>
+        <div class="table">
+            <table id="Costos" class="DataTable">
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Default</th>
+                        <th>Adjusted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="Personal">
+                        <td>Personal</td>
+                        <td class="CostoDefault"></td>
+                        <td class="CostoAdjusted">
+                            <input type = "number" min = "1" max = "9999"/>
+                        </td>
+                    </tr>
+                    <tr id="Bebida">
+                        <td>Bebida</td>
+                        <td class="CostoDefault"></td>
+                        <td class="CostoAdjusted">
+                            <input type = "number" min = "1" max = "9999"/>
+                        </td>
+                    </tr>
+                    <tr id="Hielo">
+                        <td>Hielo</td>
+                        <td class="CostoDefault"></td>
+                        <td class="CostoAdjusted">
+                            <input type = "number" min = "1" max = "9999"/>
+                        </td>
+                    </tr>
+                    <tr id="Verduleria">
+                        <td>Verduleria</td>
+                        <td class="CostoDefault"></td>
+                        <td class="CostoAdjusted">
+                            <input type = "number" min = "1" max = "9999"/>
+                        </td>
+                     </tr>
+                    <tr id="Cristaleria">
+                        <td>Cristaleria</td>
+                        <td class="CostoDefault"></td>
+                        <td class="CostoAdjusted">
+                            <input type = "number" min = "1" max = "9999"/>
+                        </td>
+                    </tr>                
+                    <tr id="Extras">
+                        <td>Extras</td>
+                        <td class="CostoDefault"></td>
+                        <td class="CostoAdjusted">
+                            <input type = "number" min = "1" max = "9999"/>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td id="TotalCostosDefault"></td>
+                        <td id="TotalCostosAdjusted"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </section>
+</main>

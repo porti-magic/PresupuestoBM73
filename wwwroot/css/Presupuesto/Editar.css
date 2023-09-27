@@ -1,0 +1,8 @@
+﻿body {
+}
+
+#Contact {
+    border: solid 5px black;
+    border-radius: 15px;
+    background-color: gray;
+}

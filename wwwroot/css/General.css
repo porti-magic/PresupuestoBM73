@@ -1,0 +1,106 @@
+﻿main {
+    padding: 10px;
+    display: grid;
+    grid-template-areas:
+        'contact general menu'
+        'nada nada menu'
+        'precio precio precio';
+    gap: 10px;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.datagroup > .form {
+    display: grid;
+    grid-template-areas:
+        'lable input'
+        'lable input'
+        'lable input';
+    gap: 10px;
+    align-content: space-evenly;
+    justify-content: start;
+    justify-items: start;
+    margin: 10px;
+}
+
+.datagroup {
+    border: solid 5px black;
+    border-radius: 15px;
+    background-color: gray;
+}
+
+    .datagroup > h3 {
+        text-align: center;
+        border-bottom: double 3px black;
+        margin: 0px;
+    }
+
+#Contact {
+    grid-area: contact;
+}
+
+#General {
+    grid-area: general;
+}
+
+#personas {
+    width: 6ch;
+}
+
+#General > p {
+    margin: 0px;
+}
+
+#Menu {
+    grid-area: menu;
+    text-align: center;
+}
+
+.DataTable {
+    border-spacing: 0px;
+    border: 1px solid black;
+    table-layout: auto;
+    margin: 10px;
+}
+
+th {
+    background-color: brown;
+}
+
+th, td {
+    border: 3px solid black;
+}
+
+.DataTable > tbody > tr {
+    background-color: rgb(40, 40, 40);
+}
+
+.DataTable > tbody > tr > td {
+    color: white;
+}
+
+.TragoCol {
+    width: 10em;
+}
+
+.SelectColumn {
+    width: 5em;
+}
+
+#Precio, #EstimarBtn {
+    grid-area: precio;
+    width: 100%;
+}
+
+    #Precio > div {
+        text-align: center;
+    }
+
+#submitBtn, #EstimarBtn {
+    margin: 0.5em;
+    height: 120%;
+    border: solid 2px black;
+    border-radius: 15px;
+    background-color: red;
+    font-weight: bold;
+}

@@ -1,0 +1,62 @@
+﻿@page
+@model EstimadorBM.Pages.Presupuesto.BuscarModel
+@{
+	ViewData["Title"] = "Presupuestos 73";
+}
+
+<link rel="stylesheet" href="~/css/Presupuesto/Buscar.css" asp-append-version="true" />
+<script type="module" src="~/js/Presupuesto/Buscar.js" asp-append-version="true"></script>
+
+<div class="container" id="filtersContainer">
+	@foreach (var filter in Model.Filters)
+	{
+		<div class="dropdown Filter" id=@(filter.Key.Replace(" ","")+"FilterContainer")>
+			<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id=@(filter.Key.Replace(" ","")+"FilterBTN") data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+				@filter.Key
+			</button>
+			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+				@foreach (var option in filter.Value)
+				{
+					<li class="dropdown-item">
+						<input id=@(option.Replace(" ", "_")+"Checkbox") value=@(option.Replace(" ","_")) class=@(filter.Key.Replace(" ","")+"Option") type="checkbox" />
+						<label for=@(option.Replace(" ", "_")+"Checkbox")>@option</label>
+					</li>
+				}
+			</ul>
+		</div>
+	}
+</div>
+
+<buton class="btn btn-dark btn-primary" id="FilterBtn">Buscar</buton>
+
+<div class="container">
+	<table id="mainTable" class="table table-dark table-striped table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nombre</th>
+				<th>Fecha de Evento</th>
+				<th>Direccion</th>
+				<th>Carta</th>
+				<th>Fecha de creacion</th>
+				<th>Estado</th>
+				<th> </th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var presupuesto in Model.Presupuestos)
+			{
+				<tr>
+					<td>@presupuesto.ID</td>
+					<td>@presupuesto.Name</td>
+					<td>@presupuesto.StartDate</td>
+					<td>@presupuesto.Address</td>
+					<td>@presupuesto.Menu</td>
+					<td>@presupuesto.CreateDate</td>
+					<td>@presupuesto.State</td>
+					<td><a target="_blank" href=@($"Editar?id={presupuesto.ID}")>edit</a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

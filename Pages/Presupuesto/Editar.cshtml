@@ -1,0 +1,16 @@
+﻿@page
+@model EstimadorBM.Pages.Presupuesto.EditarModel
+@{
+	ViewData["Title"] = "Presupuestos 73";
+}
+
+<link rel="stylesheet" href="~/css/Presupuesto/Editar.css" asp-append-version="true" />
+<script type="module" src="~/js/Presupuesto/Editar.js" asp-append-version="true"></script>
+
+<div id="Contact" class="container"> 
+	<h3>Contacto</h3>
+	<p><b>Nombre: </b>@Model.Presupuesto.Fname</p>
+	<p><b>Apellido: </b>@Model.Presupuesto.Lname</p>
+	<p><b>Mail: </b>@Model.Presupuesto.Email</p>
+	<p><b>Telefono: </b>@Model.Presupuesto.Phone</p>
+</div>

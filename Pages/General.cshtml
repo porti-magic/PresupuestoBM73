@@ -1,0 +1,119 @@
+﻿@page
+@model EstimadorBM.Pages.GeneralModel
+@{
+	ViewData["Title"] = "Presupuestos 73";
+}
+
+<link rel="stylesheet" href="~/css/General.css" asp-append-version="true" />
+<script type="module" src="~/js/General.js" asp-append-version="true"></script>
+
+<section class="datagroup" id="Contact">
+	<h3>Contacto</h3>
+	<form id="contactData" class="form">
+		@*<script type="module" src="~/js/Contact.js" asp-append-version="true"></script>*@
+		<label for="fname">Nombre:</label>
+		<input form="contactData" required placeholder="Nombre" id="fname" name="Nombre" />
+		<label for="lname">Apellido:</label>
+		<input form="contactData" required placeholder="Apellido" id="lname" name="Apellido" />
+		<label for="email">Mail</label>
+		<input form="contactData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" />
+		<label for="phone">Teléfono</label>
+		<input form="contactData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" />
+	</form>
+</section>
+
+<section class="datagroup" id="General">
+	<h3>Informacion del evento</h3>
+	<form class="form" id="eventData">
+		<label for="adress">Dirección:</label>
+		<input form="eventData" required placeholder="Dirección" id="adress" name="Direccion" />
+		<label for="start">Inicio: </label>
+		<input form="eventData" required id="start" type="datetime-local" name="Inicio" />
+		<label for="Duration">Duracion (Hs): </label>
+		<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01"/>
+		<label for="personas">Cantidad de personas:</label>
+		<input form="eventData" required id="personas" name="Personas" type="number" min=20 max=1000 value="20" />
+		<label for="eventType">Tipo de evento: </label>
+		<select form="eventData" required id="enventType">
+			<option value="Cumpleaños">Cumpleaños</option>
+			<option value="Casamiento">Casamiento</option>
+			<option value="Empresaria">Evento Empresarial</option>
+			<option value="Infantil">Infantil</option>
+		</select>
+	</form>
+</section>
+
+<section class="datagroup" id="Menu">
+	<h3>Carta</h3>
+	<div>
+		<label for="carta">Carta: </label>
+		<select id="carta">
+			@foreach (var carta in Model.cartas)
+			{
+				<option value=@carta.ID>@carta.Name</option>
+			}
+		</select>
+		<table id="MenuTable" class="DataTable">
+			<thead>
+				<tr>
+					<th class="TragoCol">Trago</th>
+					<th class="SelectColumn" hidden="@Model.cartas.First().ID !=3"></th>
+				</tr>
+			</thead>
+			<tbody>
+					@foreach (var trago in Model.tragos)
+					{
+						@if (trago.IsAvailable)
+						{
+						<tr id="@trago.ID" hidden="@(!Model.cartas.First().Drinks.Contains(trago.ID))">
+							<td class="TragoCol">@trago.Name</td>
+							<td class="SelectColumn" hidden="@Model.cartas.First().ID !=3">
+								<input class="selectTrago" type="checkbox" value="@trago.ID" checked="@Model.cartas.First().Drinks.Contains(trago.ID)" />
+							</td>
+						</tr>
+						}
+					}
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<button id="EstimarBtn">Estimar Evento</button>
+
+<section class="datagroup" id="Precio" hidden="true">
+	<h3>Estimación</h3>
+	<div>
+		<h2 id="TotalEstimado">$100.000 - $1.000.000</h2>
+		<h3 id="EstimadoPAX">($5.000 - $10.000 por persona)</h3>
+		<button id="submitBtn">Solicitar presupuesto</button>
+	</div>
+	<div id="mensajePresupuesto" hidden class="alert alert-success">
+		¡Presupuesto creado exitosamente!
+	</div>
+</section>
+
+@* Bootstrap Modal Dialog *@
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Bienvenido al estimador de eventos de La Barral del 73</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h3>Antes de usar el estimador recuerde:</h3>
+				<ol>
+					<li>El resultado de en la pagina es solo una <b>estimación</b>, en caso de estar interesado solicite el presupuesto y sera contactado por 'La Barra del 73' para acordar el precio final</li>
+					<li>Recomendamos leer el <a href="#foo">Manual de uso</a></li>
+					<li>Al continuar declara haber leido y estar de acuerdo con los <a href="#foo">Terminos y condiciones</a> y las <a href="Privacy">Politicas de privasidad</a></li>
+				</ol>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="aceptBtn" class="btn btn-primary">Aceptar</button>
+			</div>
+		</div>
+	</div>
+</div>

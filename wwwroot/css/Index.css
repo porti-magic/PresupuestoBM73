@@ -1,0 +1,109 @@
+﻿main {
+    padding: 10px;
+    display: grid;
+    grid-template-areas:
+        'contact general_info menu'
+        'costos precios menu';
+    gap: 10px;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.datagroup > form {
+    display: grid;
+    grid-template-areas:
+        'lable input'
+        'lable input'
+        'lable input';
+    gap: 10px;
+    align-content: space-evenly;
+    justify-content: start;
+    justify-items: start;
+    margin: 10px;
+}
+
+.datagroup {
+    border: solid 5px black;
+    border-radius: 15px;
+    background-color: gray;
+}
+
+.datagroup > h3{
+    text-align: center;
+    border-bottom: double 3px black;
+    margin: 0px;
+}
+
+#Contact{
+    grid-area: contact;
+}
+
+#General {
+    grid-area: general_info;
+}
+
+#personas, #TragosPAX{
+    width: 6ch;
+}
+
+#General > p {
+    margin: 0px;
+}
+
+#Menu{
+    grid-area: menu;
+    text-align: center;
+}
+
+#Menu > div{
+    padding-top: 10px;
+}
+
+.DataTable {
+    border-spacing: 0px;
+    border: 1px solid black;
+    table-layout: auto;
+    margin: 10px;
+}
+
+.TragoCol{
+    width: 20ch;
+}
+.CantidadCol{
+    text-align: center;
+    width: 10CH;
+}
+
+th {
+    background-color: brown;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+.DataTable > tbody > tr:nth-child(even) {
+    background-color: rgb(116, 116, 116);
+}
+
+.DataTable > tbody > tr:nth-child(odd) {
+    background-color: rgb(64, 61, 61);
+}
+
+.DataTable > tbody > tr > td {
+    color: white;
+}
+
+.Cantidad_Trago{
+    width: 6ch;
+}
+
+tfoot {
+    background-color: brown;
+    color: black;
+    font-weight:bold;
+}
+
+#agregarTrago{
+    margin: 5%;
+}
