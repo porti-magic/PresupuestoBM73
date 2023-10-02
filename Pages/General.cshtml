@@ -4,122 +4,109 @@
 	ViewData["Title"] = "Presupuestos 73";
 }
 
- <link rel="stylesheet" href="~/css/General.css" asp-append-version="true" />
-<script type="module" src="~/js/General.js" asp-append-version="true"></script> 
+@* <link rel="stylesheet" href="~/css/General.css" asp-append-version="true" /> *@
+<script type="module" src="~/js/General.js" asp-append-version="true"></script>
 
-@* <section class="datagroup" id="Contact">
-	<h3>Contacto</h3>
-	<form id="contactData" class="form">
-		<label for="fname">Nombre:</label>
-		<input form="contactData" required placeholder="Nombre" id="fname" name="Nombre" />
-		<label for="lname">Apellido:</label>
-		<input form="contactData" required placeholder="Apellido" id="lname" name="Apellido" />
-		<label for="email">Mail</label>
-		<input form="contactData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" />
-		<label for="phone">Teléfono</label>
-		<input form="contactData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" />
-	</form>
-</section> *@
-
-@* TODO: 
+@* TODO:
 	1. Add the differents sections to the accordion
 	2. Format all the sections and the according correctly
 	3. Verify and fix all the functionalities *@
 
-<div class="accordion" id="accordionExample">
+<div class="accordion accordin-dark" id="accordion">
+	@*Event Data*@
 	<div class="accordion-item">
-		<h2 class="accordion-header" id="headingOne">
-			<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				Accordion Item #1
+		<h2 class="accordion-header" id="headingEventData">
+			<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEventData" aria-expanded="true" aria-controls="collapseEventData">
+				Datos del evento
 			</button>
 		</h2>
-		<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+		<div id="collapseEventData" class="accordion-collapse collapse show" aria-labelledby="headingEventData" data-bs-parent="#accordion">
 			<div class="accordion-body">
-				<strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+				<form class="form" id="eventData">
+					<label for="adress">Dirección:</label>
+					<input form="eventData" required placeholder="Dirección" id="adress" name="Direccion" />
+					<label for="start">Inicio: </label>
+					<input form="eventData" required id="start" type="datetime-local" name="Inicio" />
+					<label for="Duration">Duracion (Hs): </label>
+					<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01" />
+					<label for="personas">Cantidad de personas:</label>
+					<input form="eventData" required id="personas" name="Personas" type="number" min=20 max=1000 value="20" />
+					<label for="eventType">Tipo de evento: </label>
+					<select form="eventData" required id="enventType">
+						<option value="Cumpleaños">Cumpleaños</option>
+						<option value="Casamiento">Casamiento</option>
+						<option value="Empresaria">Evento Empresarial</option>
+						<option value="Infantil">Infantil</option>
+					</select>
+				</form>
 			</div>
 		</div>
 	</div>
+	@* Contact Data *@
 	<div class="accordion-item">
-		<h2 class="accordion-header" id="headingTwo">
-			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				Accordion Item #2
+		
+		<h2 class="accordion-header" id="headingContactData">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContactData" aria-expanded="false" aria-controls="collapseContactData">
+				Datos de contacto
 			</button>
 		</h2>
-		<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+		<div id="collapseContactData" class="accordion-collapse collapse" aria-labelledby="headingContactData" data-bs-parent="#accordion">
 			<div class="accordion-body">
-				<strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+				<form id="contactData" class="form">
+					<label for="fname">Nombre:</label>
+					<input form="contactData" required placeholder="Nombre" id="fname" name="Nombre" />
+					<label for="lname">Apellido:</label>
+					<input form="contactData" required placeholder="Apellido" id="lname" name="Apellido" />
+					<label for="email">Mail</label>
+					<input form="contactData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" />
+					<label for="phone">Teléfono</label>
+					<input form="contactData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" />
+				</form>
 			</div>
 		</div>
 	</div>
-	<div class="accordion-item">
-		<h2 class="accordion-header" id="headingThree">
-			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-				Accordion Item #3
+	@*Menu*@
+	<div class="accordion-item">	
+		<h2 class="accordion-header" id="headingMenu">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMenu" aria-expanded="false" aria-controls="collapseMenu">
+				Carta
 			</button>
 		</h2>
-		<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+		<div id="collapseMenu" class="accordion-collapse collapse" aria-labelledby="headingMenu" data-bs-parent="#accordion">
 			<div class="accordion-body">
-				<strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+				<label for="carta">Carta: </label>
+				<select id="carta">
+					@foreach (var carta in Model.cartas)
+					{
+						<option value=@carta.ID>@carta.Name</option>
+					}
+				</select>
+				<table id="MenuTable" class="DataTable table">
+					<thead>
+						<tr>
+							<th class="TragoCol">Trago</th>
+							<th class="SelectColumn" hidden="@Model.cartas.First().ID !=3"></th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var trago in Model.tragos)
+						{
+							@if (trago.IsAvailable)
+							{
+								<tr id="@trago.ID" hidden="@(!Model.cartas.First().Drinks.Contains(trago.ID))">
+									<td class="TragoCol">@trago.Name</td>
+									<td class="SelectColumn" hidden="@Model.cartas.First().ID !=3">
+										<input class="selectTrago" type="checkbox" value="@trago.ID" checked="@Model.cartas.First().Drinks.Contains(trago.ID)" />
+									</td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </div>
-
-<section class="datagroup" id="General">
-	<h3>Informacion del evento</h3>
-	<form class="form" id="eventData">
-		<label for="adress">Dirección:</label>
-		<input form="eventData" required placeholder="Dirección" id="adress" name="Direccion" />
-		<label for="start">Inicio: </label>
-		<input form="eventData" required id="start" type="datetime-local" name="Inicio" />
-		<label for="Duration">Duracion (Hs): </label>
-		<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01"/>
-		<label for="personas">Cantidad de personas:</label>
-		<input form="eventData" required id="personas" name="Personas" type="number" min=20 max=1000 value="20" />
-		<label for="eventType">Tipo de evento: </label>
-		<select form="eventData" required id="enventType">
-			<option value="Cumpleaños">Cumpleaños</option>
-			<option value="Casamiento">Casamiento</option>
-			<option value="Empresaria">Evento Empresarial</option>
-			<option value="Infantil">Infantil</option>
-		</select>
-	</form>
-</section>
-
-<section class="datagroup" id="Menu">
-	<h3>Carta</h3>
-	<div>
-		<label for="carta">Carta: </label>
-		<select id="carta">
-			@foreach (var carta in Model.cartas)
-			{
-				<option value=@carta.ID>@carta.Name</option>
-			}
-		</select>
-		<table id="MenuTable" class="DataTable">
-			<thead>
-				<tr>
-					<th class="TragoCol">Trago</th>
-					<th class="SelectColumn" hidden="@Model.cartas.First().ID !=3"></th>
-				</tr>
-			</thead>
-			<tbody>
-					@foreach (var trago in Model.tragos)
-					{
-						@if (trago.IsAvailable)
-						{
-						<tr id="@trago.ID" hidden="@(!Model.cartas.First().Drinks.Contains(trago.ID))">
-							<td class="TragoCol">@trago.Name</td>
-							<td class="SelectColumn" hidden="@Model.cartas.First().ID !=3">
-								<input class="selectTrago" type="checkbox" value="@trago.ID" checked="@Model.cartas.First().Drinks.Contains(trago.ID)" />
-							</td>
-						</tr>
-						}
-					}
-			</tbody>
-		</table>
-	</div>
-</section>
 
 <button id="EstimarBtn">Estimar Evento</button>
 
