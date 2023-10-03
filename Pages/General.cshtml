@@ -22,29 +22,41 @@
 		</h2>
 		<div id="collapseEventData" class="accordion-collapse collapse show" aria-labelledby="headingEventData" data-bs-parent="#accordion">
 			<div class="accordion-body">
-				<form class="form" id="eventData">
-					<label for="adress">Dirección:</label>
-					<input form="eventData" required placeholder="Dirección" id="adress" name="Direccion" />
-					<label for="start">Inicio: </label>
-					<input form="eventData" required id="start" type="datetime-local" name="Inicio" />
-					<label for="Duration">Duracion (Hs): </label>
-					<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01" />
-					<label for="personas">Cantidad de personas:</label>
-					<input form="eventData" required id="personas" name="Personas" type="number" min=20 max=1000 value="20" />
-					<label for="eventType">Tipo de evento: </label>
-					<select form="eventData" required id="enventType">
-						<option value="Cumpleaños">Cumpleaños</option>
-						<option value="Casamiento">Casamiento</option>
-						<option value="Empresaria">Evento Empresarial</option>
-						<option value="Infantil">Infantil</option>
-					</select>
+				<form class="form needs-validation" id="eventData" novalidate>
+					<div class="mb-3">
+						<label for="adress" class="form-label">Dirección:</label>
+						<input form="eventData" required placeholder="Dirección" id="adress" name="Direccion"  class="form-control"/>
+					</div>
+					<div class="mb-3">
+						<label for="start" class="form-label">Inicio: </label>
+						<input form="eventData" required id="start" type="datetime-local" name="Inicio"  class="form-control"/>
+					</div>
+					<div class="mb-3">
+						<label for="Duration" class="form-label">Duracion (Hs): </label>
+						<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01"  class="form-control"/>
+					</div>
+					<div class="mb-3">
+						<label for="personas" class="form-label">Cantidad de personas:</label>
+						<input form="eventData" required id="personas" name="Personas" type="number" min=20 max=1000 value="20"  class="form-control"/>
+					</div>
+					<div class="mb-3">
+						<label for="eventType" class="form-label">Tipo de evento: </label>
+						<select form="eventData" required id="enventType" class="form-control">
+							<option value="Cumpleaños">Cumpleaños</option>
+							<option value="Casamiento">Casamiento</option>
+							<option value="Empresaria">Evento Empresarial</option>
+							<option value="Infantil">Infantil</option>
+						</select>
+					</div>
+					<div class="col-12">
+						<button class="btn btn-primary" id="EventDataBtn" type="button">Siguiente</button>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 	@* Contact Data *@
 	<div class="accordion-item">
-		
 		<h2 class="accordion-header" id="headingContactData">
 			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContactData" aria-expanded="false" aria-controls="collapseContactData">
 				Datos de contacto
@@ -53,20 +65,28 @@
 		<div id="collapseContactData" class="accordion-collapse collapse" aria-labelledby="headingContactData" data-bs-parent="#accordion">
 			<div class="accordion-body">
 				<form id="contactData" class="form">
-					<label for="fname">Nombre:</label>
-					<input form="contactData" required placeholder="Nombre" id="fname" name="Nombre" />
-					<label for="lname">Apellido:</label>
-					<input form="contactData" required placeholder="Apellido" id="lname" name="Apellido" />
-					<label for="email">Mail</label>
-					<input form="contactData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" />
-					<label for="phone">Teléfono</label>
-					<input form="contactData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" />
+					<div class="mb-3">
+						<label for="fname" class="form-label">Nombre:</label>
+						<input form="contactData" required placeholder="Nombre" id="fname" name="Nombre" class="form-control" />
+					</div>
+					<div class="mb-3">
+						<label for="lname" class="form-label">Apellido:</label>
+						<input form="contactData" required placeholder="Apellido" id="lname" name="Apellido" class="form-control" />
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">Mail</label>
+						<input form="contactData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" class="form-control" />
+					</div>
+					<div class="mb-3">
+						<label for="phone" class="form-label">Teléfono</label>
+						<input form="contactData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" class="form-control" />
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 	@*Menu*@
-	<div class="accordion-item">	
+	<div class="accordion-item">
 		<h2 class="accordion-header" id="headingMenu">
 			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMenu" aria-expanded="false" aria-controls="collapseMenu">
 				Carta

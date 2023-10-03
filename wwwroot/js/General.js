@@ -167,5 +167,13 @@ window.onload = function () {
     };
     EstimateBTN.onclick = function () { GetEstimation() };
     submitBtn.onclick = function () { CreatePresupuesto() };
-    
+
+    document.getElementById("EventDataBtn").onclick = function (event) {
+        var form = document.getElementById('eventData')
+        form.classList.add('was-validated')
+        if (form.checkValidity()) {
+            
+        }
+
+    };
 }
