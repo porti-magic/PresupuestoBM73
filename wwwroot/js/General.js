@@ -172,6 +172,9 @@ window.onload = function () {
         var form = document.getElementById('eventData')
         form.classList.add('was-validated')
         if (form.checkValidity()) {
+            var element = document.getElementById("collapseMenu");
+            var myCollapse = new bootstrap.Collapse(element);
+            myCollapse.show();
             
         }
 
