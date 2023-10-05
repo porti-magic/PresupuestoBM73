@@ -71,6 +71,8 @@ function GetEstimation() {
                 document.getElementById("TotalEstimado").innerHTML = `$${Min.toFixed(2)} - $${Max.toFixed(2)}`;
                 document.getElementById("EstimadoPAX").innerHTML = `($${(Min / Number(Persons.value)).toFixed(2)} - $${(Max / Number(Persons.value)).toFixed(2)} por persona)`;
                 ShowPrecio(true);
+                var myCollapse = new bootstrap.Collapse(Precio);
+                myCollapse.show();
             })
             .catch(error => console.error('Error:', error));
     }
@@ -139,7 +141,7 @@ window.onload = function () {
     CartaSelector = document.getElementById("carta");
     CartaTbody = document.getElementById("MenuTable").getElementsByTagName("tbody")[0];
     EstimateBTN = document.getElementById("EstimarBtn");
-    Precio = document.getElementById("Precio");
+    Precio = document.getElementById("collapsePrecio");
     TragoSelectors = document.getElementsByClassName("selectTrago");
     submitBtn = document.getElementById("submitBtn");
     Duration = document.getElementById('Duration');

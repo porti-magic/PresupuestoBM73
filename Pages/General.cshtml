@@ -93,6 +93,28 @@
 						}
 					</tbody>
 				</table>
+				<button id="EstimarBtn" class="btn btn-primary" type="button">Estimar Evento</button>
+			</div>
+		</div>
+	</div>
+	@*Precio*@
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="headingPrecio">
+			<button class="accordion-button" type="button" aria-expanded="true" data-bs-toggle="collapse" data-bs-target="#collapsePrecio" aria-controls="collapsePrecio" disabled>
+				Datos del evento
+			</button>
+		</h2>
+		<div id="collapsePrecio" class="accordion-collapse collapse" aria-labelledby="headingPrecio" data-bs-parent="#accordion">
+			<div class="accordion-body">
+					<h3>Estimación</h3>
+					<div>
+						<h2 id="TotalEstimado"></h2>
+						<h3 id="EstimadoPAX"></h3>
+						<button id="submitBtn">Solicitar presupuesto</button>
+					</div>
+					<div id="mensajePresupuesto" hidden class="alert alert-success">
+						¡Presupuesto creado exitosamente!
+					</div>
 			</div>
 		</div>
 	</div>
@@ -128,20 +150,6 @@
 	</div>
 	
 </div>
-
-<button id="EstimarBtn">Estimar Evento</button>
-
-<section class="datagroup" id="Precio" hidden="true">
-	<h3>Estimación</h3>
-	<div>
-		<h2 id="TotalEstimado">$100.000 - $1.000.000</h2>
-		<h3 id="EstimadoPAX">($5.000 - $10.000 por persona)</h3>
-		<button id="submitBtn">Solicitar presupuesto</button>
-	</div>
-	<div id="mensajePresupuesto" hidden class="alert alert-success">
-		¡Presupuesto creado exitosamente!
-	</div>
-</section>
 
 @* Bootstrap Modal Dialog *@
 <!-- Modal -->
