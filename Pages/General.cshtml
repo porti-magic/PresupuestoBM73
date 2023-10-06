@@ -29,12 +29,12 @@
 						<div class="invalid-feedback">Por favor ingrse la dirección.</div>
 					</div>
 					<div class="form-floating mb-3">
-						<input form="eventData" required id="start" type="datetime-local" name="Inicio"  class="form-control" placeholder="dd/mm/yyy 00:00"/>
+						<input form="eventData" required id="start" type="datetime-local" name="Inicio" class="form-control" placeholder="dd/mm/yyy 00:00" />
 						<label for="start" class="form-label">Fecha y hora: </label>
 						<div class="invalid-feedback">Por favor seleccione la fecha y hora del evento.</div>
 					</div>
 					<div class="form-floating mb-3">
-						<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01" class="form-control" placeholder="8"/>
+						<input form="eventData" required id="Duration" type="number" name="Duración" min="4" max="15" step="0.01" class="form-control" placeholder="8" />
 						<label for="Duration" class="form-label">Duracion (Hs): </label>
 						<div class="invalid-feedback">Por favor ingrese la duracion del evento (4 a 15 horas).</div>
 					</div>
@@ -53,7 +53,7 @@
 						<label for="eventType" class="form-label">Tipo de evento: </label>
 					</div>
 					<div class="col-12">
-						<button class="btn btn-primary " id="EventDataBtn" type="button">Siguiente</button>
+						<button class="btn btn-primary col-12" id="EventDataBtn" type="button">Siguiente</button>
 					</div>
 				</form>
 			</div>
@@ -68,36 +68,35 @@
 		</h2>
 		<div id="collapseMenu" class="accordion-collapse collapse" aria-labelledby="headingMenu" data-bs-parent="#accordion">
 			<div class="accordion-body">
-				<label for="carta">Carta: </label>
-				<select id="carta">
-					@foreach (var carta in Model.cartas)
-					{
-						<option value=@carta.ID>@carta.Name</option>
-					}
-				</select>
-				<table id="MenuTable" class="DataTable table">
-					<thead>
-						<tr>
-							<th class="TragoCol">Trago</th>
-							<th class="SelectColumn" hidden="@Model.cartas.First().ID !=3"></th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var trago in Model.tragos)
-						{
-							@if (trago.IsAvailable)
+
+				<div class="card">
+					<div class="card-header">
+						<label for="carta">Carta: </label>
+						<select id="carta" class="form-select" aria-label="Seleccione una carta">
+							@foreach (var carta in Model.cartas)
 							{
-								<tr id="@trago.ID" hidden="@(!Model.cartas.First().Drinks.Contains(trago.ID))">
-									<td class="TragoCol">@trago.Name</td>
-									<td class="SelectColumn" hidden="@Model.cartas.First().ID !=3">
-										<input class="selectTrago" type="checkbox" value="@trago.ID" checked="@Model.cartas.First().Drinks.Contains(trago.ID)" />
-									</td>
-								</tr>
+								<option value=@carta.ID>@carta.Name</option>
 							}
-						}
-					</tbody>
-				</table>
-				<button id="EstimarBtn" class="btn btn-primary" type="button">Estimar Evento</button>
+						</select>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Tragos</h5>
+						<h6 class="card-subtitle mb-2 text-muted">Seleccione los tragos</h6>
+						<div class="row card-text" id="TragosList">
+							@foreach (var trago in Model.tragos)
+							{
+								@if (trago.IsAvailable)
+								{
+									<div class="col-auto TragoSelector" id="@trago.ID" hidden="@(!Model.cartas.First().Drinks.Contains(trago.ID))">
+										<input class="selectTrago" id=@(trago.Name + "selector") type="checkbox" value="@trago.ID" checked="@Model.cartas.First().Drinks.Contains(trago.ID)" @(Model.cartas.First().ID != 3 ? "disabled" : "") />
+										<label for=@(trago.Name + "Selector") class="form-label">@trago.Name</label>
+									</div>
+								}
+							}
+						</div>
+					</div>
+				</div>
+				<button id="EstimarBtn" class="btn btn-primary mt-2" type="button">Estimar Evento</button>
 			</div>
 		</div>
 	</div>
@@ -110,12 +109,12 @@
 		</h2>
 		<div id="collapsePrecio" class="accordion-collapse collapse" aria-labelledby="headingPrecio" data-bs-parent="#accordion">
 			<div class="accordion-body">
-					<h3>Estimación</h3>
-					<div>
-						<h2 id="TotalEstimado"></h2>
-						<h3 id="EstimadoPAX"></h3>
-						<button id="PrecioBtn">Solicitar presupuesto</button>
-					</div>
+				<h3>Estimación</h3>
+				<div>
+					<h2 id="TotalEstimado"></h2>
+					<h3 id="EstimadoPAX"></h3>
+					<button id="PrecioBtn">Solicitar presupuesto</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -158,7 +157,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
 
 @* Bootstrap Modal Dialog *@

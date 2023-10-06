@@ -1,29 +1,26 @@
 ﻿import { filter } from "./Transformations.js";
 
 
-let Persons, CartaTbody, CartaSelector, cartas = [], tragos = [], EstimateBTN, Min, Max, Precio, TragoSelectors, submitBtn, Duration
+let Persons, CartaSelector, cartas = [], tragos = [], EstimateBTN, Min, Max, Precio, TragoSelectors, submitBtn, Duration
     , EventDataForm, EventDataBTN, EventDataAccordionBTN, MenuAccordionBTN, PrecioBTN, PrecioAccordionBTN;
 
-function ShowSelectTragoColumn(bool) {
-    for (let element of document.getElementsByClassName("SelectColumn")) {
-        element.hidden = !bool;
-    }
-
-    for (let cell of document.getElementsByClassName("TragoCol")) {
-        cell.style.width = bool ? "10em" : "15em";
-    }
-}
-
 function SelectCarta(cartaID) {
-    for (let r of CartaTbody.getElementsByTagName("tr")) {
+    let custom = cartaID == 3
+    for (let t of document.getElementsByClassName("TragoSelector")) {
+        let input = t.getElementsByTagName("input")[0];
         let drinks = filter(cartaID, cartas).drinks;
-        let id = Number(r.id);
+        let id = Number(t.id);
         let isInclueded = drinks.includes(id);
-        r.hidden = !isInclueded;
-        r.getElementsByTagName("td")[1].getElementsByTagName("input")[0].checked = isInclueded;
-    }
+        t.hidden = !isInclueded;
+        input.checked = isInclueded;
+        if (custom) {
+            input.removeAttribute("disabled");
+        }
+        else {
+            input.setAttribute("disabled", "");
 
-    ShowSelectTragoColumn(cartaID == 3);
+        }
+    }
 }
 
 async function LoadCartas() {
@@ -158,7 +155,6 @@ window.onload = function () {
 function ElementsInicialization() {
     Persons = document.getElementById("personas");
     CartaSelector = document.getElementById("carta");
-    CartaTbody = document.getElementById("MenuTable").getElementsByTagName("tbody")[0];
     EstimateBTN = document.getElementById("EstimarBtn");
     TragoSelectors = document.getElementsByClassName("selectTrago");
     submitBtn = document.getElementById("submitBtn");
