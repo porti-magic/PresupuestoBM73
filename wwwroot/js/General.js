@@ -1,7 +1,8 @@
 ﻿import { filter } from "./Transformations.js";
 
 
-let Persons, CartaTbody, CartaSelector, cartas = [], tragos = [], EstimateBTN, Min, Max, Precio, TragoSelectors, submitBtn, Duration;
+let Persons, CartaTbody, CartaSelector, cartas = [], tragos = [], EstimateBTN, Min, Max, Precio, TragoSelectors, submitBtn, Duration
+    , EventDataForm, EventDataBTN, EventDataAccordionBTN, MenuAccordionBTN, PrecioBTN, PrecioAccordionBTN;
 
 function ShowSelectTragoColumn(bool) {
     for (let element of document.getElementsByClassName("SelectColumn")) {
@@ -51,79 +52,54 @@ async function LoadTragos() {
 }
 
 function GetEstimation() {
-    let form = document.getElementById("eventData");
-
-    if (form.checkValidity()) {
-
-        let selectedDrinks = [];
-        for (let d of TragoSelectors) {
-            if (d.checked) {
-                selectedDrinks.push(d.value);
-            }
+    let selectedDrinks = [];
+    for (let d of TragoSelectors) {
+        if (d.checked) {
+            selectedDrinks.push(d.value);
         }
-
-        fetch(`Estimation?Pleople=${Persons.value}&Drinks=${selectedDrinks.toString()}&Duration=${Duration.value}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                Min = data[0].min;
-                Max = data[0].max;
-                document.getElementById("TotalEstimado").innerHTML = `$${Min.toFixed(2)} - $${Max.toFixed(2)}`;
-                document.getElementById("EstimadoPAX").innerHTML = `($${(Min / Number(Persons.value)).toFixed(2)} - $${(Max / Number(Persons.value)).toFixed(2)} por persona)`;
-                ShowPrecio(true);
-                var myCollapse = new bootstrap.Collapse(Precio);
-                myCollapse.show();
-            })
-            .catch(error => console.error('Error:', error));
     }
-    else {
-        form.reportValidity();
-    }
-}
 
-function ShowPrecio(bool) {
-    EstimateBTN.hidden = bool;
-    Precio.hidden = !bool;
+    fetch(`Estimation?Pleople=${Persons.value}&Drinks=${selectedDrinks.toString()}&Duration=${Duration.value}`)
+        .then(response => response.json())
+        .then(data => {
+            Min = data[0].min;
+            Max = data[0].max;
+            document.getElementById("TotalEstimado").innerHTML = `$${Min.toFixed(2)} - $${Max.toFixed(2)}`;
+            document.getElementById("EstimadoPAX").innerHTML = `($${(Min / Number(Persons.value)).toFixed(2)} - $${(Max / Number(Persons.value)).toFixed(2)} por persona)`;
+            DisplayCollapsable(document.getElementById("collapsePrecio"));
+            MenuAccordionBTN.removeAttribute("disabled");
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 function CreatePresupuesto() {
-    let form = document.getElementById("contactData");
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "Presupuestos");
+    let test = {};
+    test.iD = 1;
+    test.fname = document.getElementById('fname').value;
+    test.lname = document.getElementById('lname').value;
+    test.email = document.getElementById('email').value;
+    test.phone = document.getElementById('phone').value;
+    test.address = document.getElementById('adress').value;
+    test.startDate = new Date(document.getElementById('start').value);
+    test.duration = Duration.value;
+    test.persons = Persons.value;
+    test.eventType = document.getElementById('enventType').value;
+    test.drinksString = GetDrinksString();
+    test.menu = CartaSelector.value;
+    test.min = Min;
+    test.max = Max;
 
-    if (form.checkValidity()) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "Presupuestos");
-        let test = {};
-        test.iD = 1;
-        test.fname = document.getElementById('fname').value;
-        test.lname = document.getElementById('lname').value;
-        test.email = document.getElementById('email').value;
-        test.phone = document.getElementById('phone').value;
-        test.address = document.getElementById('adress').value;
-        test.startDate = new Date(document.getElementById('start').value);
-        test.duration = Duration.value;
-        test.persons = Persons.value;
-        test.eventType = document.getElementById('enventType').value;
-        test.drinksString = GetDrinksString();
-        test.menu = CartaSelector.value;
-        test.min = Min;
-        test.max = Max;
-
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                document.getElementById("mensajePresupuesto").hidden = false;
-                submitBtn.hidden = true;
-            }
-            else {
-                //show error
-            }
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            document.getElementById("mensajePresupuesto").hidden = false;
+            submitBtn.hidden = true;
         }
+    }
 
-        xhttp.send(JSON.stringify(test));
-    }
-    else {
-        form.reportValidity();
-    }
+    xhttp.send(JSON.stringify(test));
 }
 
 function GetDrinksString() {
@@ -136,19 +112,66 @@ function GetDrinksString() {
     return res.substring(2);
 }
 
+function DisplayCollapsable(element) {
+    var myCollapse = new bootstrap.Collapse(element);
+    myCollapse.show();
+}
+
 window.onload = function () {
-    Persons = document.getElementById("personas");
-    CartaSelector = document.getElementById("carta");
-    CartaTbody = document.getElementById("MenuTable").getElementsByTagName("tbody")[0];
-    EstimateBTN = document.getElementById("EstimarBtn");
-    Precio = document.getElementById("collapsePrecio");
-    TragoSelectors = document.getElementsByClassName("selectTrago");
-    submitBtn = document.getElementById("submitBtn");
-    Duration = document.getElementById('Duration');
+    ElementsInicialization();
 
     LoadCartas();
     LoadTragos();
 
+    SetUpModal();
+
+    CartaSelector.onchange = function () { SelectCarta(Number(CartaSelector.value)) };
+
+    EventDataAccordionBTN.onclick = function () {
+        MenuAccordionBTN.setAttribute("disabled", "");
+        PrecioAccordionBTN.setAttribute("disabled", "");
+    };
+    EventDataBTN.onclick = function () {
+        EventDataForm.classList.add('was-validated')
+        if (EventDataForm.checkValidity()) {
+            DisplayCollapsable(document.getElementById("collapseMenu"));
+            EventDataAccordionBTN.removeAttribute("disabled");
+        }
+
+    };
+
+    MenuAccordionBTN.onclick = function () { PrecioAccordionBTN.setAttribute("disabled", ""); };
+    EstimateBTN.onclick = function () { GetEstimation() };
+
+    PrecioBTN.onclick = function () { DisplayCollapsable(document.getElementById("collapseContactData")); PrecioAccordionBTN.removeAttribute("disabled"); };
+
+    submitBtn.onclick = function () {
+        let form = document.getElementById("contactData");
+        form.classList.add('was-validated')
+        if (form.checkValidity()) {
+            CreatePresupuesto();
+        }
+    };
+
+}
+
+function ElementsInicialization() {
+    Persons = document.getElementById("personas");
+    CartaSelector = document.getElementById("carta");
+    CartaTbody = document.getElementById("MenuTable").getElementsByTagName("tbody")[0];
+    EstimateBTN = document.getElementById("EstimarBtn");
+    TragoSelectors = document.getElementsByClassName("selectTrago");
+    submitBtn = document.getElementById("submitBtn");
+    Duration = document.getElementById('Duration');
+    EventDataForm = document.getElementById("eventData");
+    EventDataBTN = document.getElementById("EventDataBtn");
+    EventDataAccordionBTN = document.getElementById("EventDataAccordionBtn");
+    MenuAccordionBTN = document.getElementById("MenuAccordionBtn");
+    PrecioBTN = document.getElementById("PrecioBtn");
+    PrecioAccordionBTN = document.getElementById("PrecioAccordionBtn");
+}
+
+function SetUpModal() {
     var modal = document.getElementById('exampleModal');
     var aceptBtn = document.getElementById('aceptBtn');
     // Mostrar el modal al cargar la página
@@ -156,29 +179,5 @@ window.onload = function () {
     // Ocultar el modal al hacer clic en el botón de cerrar
     aceptBtn.onclick = function () {
         modal.style.display = 'none';
-    };
-
-    Persons.onchange = function () { ShowPrecio(false); };
-    Duration.onchange = function () { ShowPrecio(false); };
-    for (let s of TragoSelectors) {
-        s.onchange = function () { ShowPrecio(false); };
-    }
-    CartaSelector.onchange = function () {
-        SelectCarta(Number(CartaSelector.value))
-        ShowPrecio(false);
-    };
-    EstimateBTN.onclick = function () { GetEstimation() };
-    submitBtn.onclick = function () { CreatePresupuesto() };
-
-    document.getElementById("EventDataBtn").onclick = function (event) {
-        var form = document.getElementById('eventData')
-        form.classList.add('was-validated')
-        if (form.checkValidity()) {
-            var element = document.getElementById("collapseMenu");
-            var myCollapse = new bootstrap.Collapse(element);
-            myCollapse.show();
-            
-        }
-
     };
 }
