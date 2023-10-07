@@ -21,12 +21,12 @@ body {
   margin-bottom: 60px;
 }
 
-header {
+/*header {
     background-color: brown;
-}
+}*/
 
 
-footer.custom {
+/*footer.custom {
     position: absolute;
     left: 0px;
     right: 0px;
@@ -42,4 +42,4 @@ body.custom {
     margin: 0;
     display: block;
     background-color: rgb(87, 12, 12);
-}
+}*/
