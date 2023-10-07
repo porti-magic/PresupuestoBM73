@@ -109,12 +109,16 @@
 		</h2>
 		<div id="collapsePrecio" class="accordion-collapse collapse" aria-labelledby="headingPrecio" data-bs-parent="#accordion">
 			<div class="accordion-body">
-				<h3>Estimación</h3>
-				<div>
-					<h2 id="TotalEstimado"></h2>
-					<h3 id="EstimadoPAX"></h3>
-					<button id="PrecioBtn">Solicitar presupuesto</button>
+				<div class="card">
+					<div class="card-header">
+						<h3 class="text-center">Precio aproximado</h3>
+					</div>
+					<div class="card-body">
+						<h3 id="TotalEstimado" class="card-title text-center"></h3>
+						<h4 class="card-subtitle text-muted text-center" id="EstimadoPAX"></h4>
+					</div>
 				</div>
+				<button id="PrecioBtn" class="btn btn-primary mt-2" type="button">Solicitar presupuesto</button>
 			</div>
 		</div>
 	</div>
