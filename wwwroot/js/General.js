@@ -61,7 +61,6 @@ function GetEstimation() {
         .then(data => {
             Min = data[0].min;
             Max = data[0].max;
-            //number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
             document.getElementById("TotalEstimado").innerHTML = `${Min.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })} - ${Max.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`;
             document.getElementById("EstimadoPAX").innerHTML = `(${(Min / Number(Persons.value)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }) } - ${(Max / Number(Persons.value)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }) } por persona)`;
             DisplayCollapsable(document.getElementById("collapsePrecio"));
