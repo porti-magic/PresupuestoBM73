@@ -4,15 +4,17 @@
 	ViewData["Title"] = "Presupuestos 73 Admin";
 }
 
+<script type="module" src="~/js/Presupuesto/Admin.js" asp-append-version="true"></script>
+
 <div class="container">
 	<div class="card">
 		<h5 class="card-header">Proveedores</h5>
 		<div class="card-body">
 			<div class="row">
 				<h5 class="col align-self-start card-title">Estado Actual</h5>
-				<button class="col-auto align-self-end btn btn-primary">Agregar proveedor</button>
+				<button id="agregarProveedorBtn" class="col-auto align-self-end btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">Agregar proveedor</button>
 			</div>
-			<table class="table table-hover">
+			<table id="proveedoresTable" class="table table-hover">
 				<thead>
 					<tr>
 						<th scope="col">ID</th>
@@ -36,6 +38,42 @@
 					}
 				</tbody>
 			</table>
+		</div>
+	</div>
+</div>
+
+@* Bootstrap Modal Dialog *@
+<!-- Modal -->
+<div class="modal" id="nuevoProveedorModal" tabindex="-1" role="dialog" aria-labelledby="nuevoProveedorModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="nuevoProveedorModalLabel">Agregar proveedor</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class ="form needs-validation" id="nuevoProveedorData" novalidate>
+					<div class="form-floating mb-3">
+						<input form="nuevoProveedorData" required placeholder="Nombre" id="name" name="name" class="form-control" />
+						<label for="name" class="form-label">Nombre:</label>
+						<div class="invalid-feedback">Por favor ingrse el nombre.</div>
+					</div>
+					<div class="form-floating mb-3">
+						<input form="nuevoProveedorData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" class="form-control" />
+						<label for="email" class="form-label">Mail</label>
+						<div class="invalid-feedback">Por favor ingrse el mail.</div>
+					</div>
+					<div class="form-floating mb-3">
+						<input form="nuevoProveedorData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" class="form-control" />
+						<label for="phone" class="form-label">Teléfono</label>
+						<div class="invalid-feedback">Por favor un telefono sin codgo de area.</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="crearProveedorBtn">Guardar</button>
+			</div>
 		</div>
 	</div>
 </div>
