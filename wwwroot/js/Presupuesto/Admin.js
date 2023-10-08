@@ -10,7 +10,6 @@ function SaveNewProveedor() {
         test.Nombre = document.getElementById('name').value;
         test.Mail = document.getElementById('email').value;
         test.Telefono = Number(document.getElementById('phone').value);
-
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
