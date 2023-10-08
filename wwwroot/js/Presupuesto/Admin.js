@@ -7,9 +7,9 @@ function SaveNewProveedor() {
         const xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../Proveedores");
         let test = {};
-        test.name = document.getElementById('name').value;
-        test.email = document.getElementById('email').value;
-        test.phone = Number(document.getElementById('phone').value);
+        test.Nombre = document.getElementById('name').value;
+        test.Mail = document.getElementById('email').value;
+        test.Telefono = Number(document.getElementById('phone').value);
 
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.onreadystatechange = function () {

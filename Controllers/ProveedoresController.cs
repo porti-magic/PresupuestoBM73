@@ -20,6 +20,7 @@ namespace EstimadorBM.Controllers
 		[HttpGet]
 		public IEnumerable<Proveedor> GetProveedores(int? ID) => ProveedorService.GetProveedores(ID);
 
-		public void CreateProveedor([FromBody] string name, [FromBody] string email, [FromBody] int phone) => ProveedorService.CreateProveedor(name, email, phone);
+		[HttpPost]
+		public void CreateProveedor([FromBody] Proveedor proveedor) => ProveedorService.CreateProveedor(proveedor.Nombre, proveedor.Mail, proveedor.Telefono);
     }
 }

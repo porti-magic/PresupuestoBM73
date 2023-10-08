@@ -14,9 +14,11 @@ namespace EstimadorBM.Services
 		public EstimatorBMContext context { get; set; }
 		public IWebHostEnvironment hostEnvironment { get; set; }
 
-		internal void CreateProveedor(string name, string email, int phone)
+		internal void CreateProveedor(string name, string email, int? phone)
 		{
-			context.Database.SqlQueryRaw<int>($"EXEC [dbo].[Create_Proveedor] @Name = '{name}', @Email = '{email}', @phone = {phone}");
+			var param = $"@Name = '{name}', @Email = '{email}', @phone = {phone}";
+			var query = $"EXEC [dbo].[Create_Proveedor] {param}";
+			var res = context.Database.SqlQueryRaw<int>(query).ToArray();
 		}
 
 		internal IEnumerable<Proveedor> GetProveedores(int? ID)
