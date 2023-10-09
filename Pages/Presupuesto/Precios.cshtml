@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-	<h3>Precios en: [proveedor]</h3>
+	<h3>Precios en: @Model.ProveedorName</h3>
 </div>
 
 <div class="container">
@@ -18,7 +18,14 @@
 		</tr>
 		<tbody>
 			<tr>
-				<td>Fernet</td>
+				<td>
+					<select class="form-select" aria-label="Selector de tipo de ingrediente">
+						@foreach(var i in Model.ingredientes)
+						{
+							<option value=@i.id>@i.name</option>
+						}
+					</select>
+				</td>
 				<td>Branca</td>
 				<td>1000</td>
 				<td>$5000</td>

@@ -1,5 +1,8 @@
-﻿namespace EstimadorBM.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace EstimadorBM.Models
 {
+	[Keyless]
 	public class Ingrediente
 	{
 		public Ingrediente(int id, string name) 

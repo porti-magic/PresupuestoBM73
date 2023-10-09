@@ -12,6 +12,7 @@ builder.Services.AddTransient<DBCartaService>();
 builder.Services.AddTransient<DBTragosService>();
 builder.Services.AddTransient<DBPresupestoService>();
 builder.Services.AddTransient<DBProveedorService>();
+builder.Services.AddTransient<DBIngredienteService>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<EstimatorBMContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EstimadorBM_DB")));
 var app = builder.Build();
