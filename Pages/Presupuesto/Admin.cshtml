@@ -33,7 +33,7 @@
 							<td>@(p.Telefono?.ToString() ?? "No Disnible")</td>
 							<td>@(p.Mail??"No Disponible")</td>
 							<td>@p.LastUpdate</td>
-							<td><a href="#">Editar datos</a></td>
+							<td><a href=@("Precios?proveedorId="+p.ID)>Editar datos</a></td>
 						</tr>
 					}
 				</tbody>
