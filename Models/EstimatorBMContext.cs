@@ -13,6 +13,7 @@ namespace EstimadorBM.Models
 		public DbSet<PresupuestoGeneralInfo> PresupuestoGeneralInfos { get; set; }
 		public DbSet<FiltersData> FiltersData { get; set; }
 		public DbSet<Ingrediente> Ingredientes { get; set; }
+		public DbSet<Precio> precios { get; set; }
 		public DbSet<Proveedor> Proveedores { get; set; }
 	}
 }

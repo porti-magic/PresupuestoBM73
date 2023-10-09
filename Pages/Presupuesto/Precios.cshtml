@@ -17,19 +17,29 @@
 			<th scope="col">Precio</th>
 		</tr>
 		<tbody>
-			<tr>
-				<td>
-					<select class="form-select" aria-label="Selector de tipo de ingrediente">
-						@foreach(var i in Model.ingredientes)
-						{
-							<option value=@i.id>@i.name</option>
-						}
-					</select>
-				</td>
-				<td>Branca</td>
-				<td>1000</td>
-				<td>$5000</td>
-			</tr>
+			@foreach (var p in Model.precios)
+			{
+				<tr>
+					<td>
+						<select class="form-select" aria-label="Selector de tipo de ingrediente">
+							@foreach (var i in Model.ingredientes)
+							{
+								@if (p.IngredienteId == i.id)
+								{
+									<option value=@i.id selected>@i.name</option>
+								}
+								else
+								{
+									<option value=@i.id>@i.name</option>
+								}
+							}
+						</select>
+					</td>
+					<td>@p.Marca</td>
+					<td>@p.Presentacion</td>
+					<td>$@p.Costo</td>
+				</tr>
+			}
 		</tbody>
 	</table>
 </div>

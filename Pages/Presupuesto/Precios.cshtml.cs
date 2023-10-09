@@ -9,23 +9,29 @@ namespace EstimadorBM.Pages.Presupuesto
 	{
 		public PreciosModel(ILogger<PreciosModel> logger,
 			DBIngredienteService ingredienteService,
-			DBProveedorService dBProveedorService)
+			DBProveedorService dBProveedorService,
+			DBPrecioService dBPrecioService)
 		{
 			Logger = logger;
 			DBIngredienteService = ingredienteService;
 			DBProveedorService = dBProveedorService;
+			DBPrecioService = dBPrecioService;
 		}
 
 		public readonly ILogger<PreciosModel> Logger;
 		public IEnumerable<Ingrediente> ingredientes { get; set; }
+		public IEnumerable<Precio> precios { get; set; }
 		public DBIngredienteService DBIngredienteService { get; set; }
 		public DBProveedorService DBProveedorService { get; set; }
+		public DBPrecioService DBPrecioService { get; set; }
 		public string ProveedorName;
 
 		public void OnGet(int proveedorId)
 		{
 			ingredientes = DBIngredienteService.GetIngredientes();
 			ProveedorName = DBProveedorService.GetProveedores(proveedorId).First().Nombre;
+			precios = DBPrecioService.GetPrecios(proveedorId);
+			
 		}
 	}
 }
