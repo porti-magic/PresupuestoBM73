@@ -17,7 +17,7 @@ namespace EstimadorBM.Models
 			this.ProveedorId = ProveedorId;
 			this.Marca = Marca;
 			this.Presentacion = Presentacion;
-			this.Costo = Costo;
+			this.Costo = Math.Round(Costo, 2);
         }
     }
 }
