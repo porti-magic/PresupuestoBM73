@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +19,7 @@
 
 
 </head>
-<body class="custom">
+<body class="d-flex flex-column h-100">
 	<header class="custom">
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-brown  box-shadow mb-3">
 			<div class="container">
@@ -45,13 +45,15 @@
 		</nav>
 	</header>
 
-	<div class="container">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
 
-	<footer class="border-top footer text-muted custom">
+	<main role="main" class="flex-shrink-0 pb-3">
+		<div class="container">
+			@RenderBody()
+
+		</div>
+	</main>
+
+	<footer class="border-top footer mt-auto text-muted custom">
 
 		<div class="container">
 			<a target="_blank" href="mailto:labarradel73@gamil.com">labarradel73@gmail.com</a>
