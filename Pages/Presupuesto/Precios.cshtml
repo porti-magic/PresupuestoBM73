@@ -1,4 +1,5 @@
 ﻿@page
+@using EstimadorBM.Models;
 @model EstimadorBM.Pages.Presupuesto.PreciosModel
 @{
 	ViewData["Title"] = "Presupuestos 73 Precios";
@@ -37,15 +38,15 @@
 							{
 								@if (p.IngredienteId == i.id)
 								{
-									<option value=@i.id selected>@i.name</option>
+									<option value=@i.name selected>@i.name</option>
 								}
 								else
 								{
-									<option value=@i.id>@i.name</option>
+									<option value=@i.name>@i.name</option>
 								}
 							}
 						</select>
-						<input required placeholder="Ingrediente" name="IngredienteName" class="form-control IngridientInput" hidden/>
+						<input required placeholder="Ingrediente" name="IngredienteName" value="@(Model.GetIngridientName(p.IngredienteId))" class="form-control IngridientInput" hidden />
 					</td>
 					<td>@p.Marca</td>
 					<td>@p.Presentacion ml</td>
@@ -63,10 +64,10 @@
 					<select class="form-select IngridientSelector" aria-label="Selector de tipo de ingrediente">
 						@foreach (var i in Model.ingredientes)
 						{
-							<option value=@i.id>@i.name</option>
+							<option value=@i.name>@i.name</option>
 						}
 					</select>
-					<input required placeholder="Ingrediente" name="IngredienteName" class="form-control IngridientInput" hidden />
+					<input required placeholder="Ingrediente" name="IngredienteName" values="@(Model.ingredientes.FirstOrDefault().name)" class="form-control IngridientInput" hidden />
 				</td>
 				<td>Nueva Marca</td>
 				<td>

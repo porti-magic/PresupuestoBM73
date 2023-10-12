@@ -25,7 +25,7 @@ namespace EstimadorBM.Pages.Presupuesto
 		public DBProveedorService DBProveedorService { get; set; }
 		public DBPrecioService DBPrecioService { get; set; }
 		public string ProveedorName;
-
+		public string test = "lalal";
 		public void OnGet(int proveedorId)
 		{
 			ingredientes = DBIngredienteService.GetIngredientes();
@@ -33,5 +33,7 @@ namespace EstimadorBM.Pages.Presupuesto
 			precios = DBPrecioService.GetPrecios(proveedorId);
 			
 		}
+
+		public string GetIngridientName(int id) => ingredientes.Single(x => x.id == id).name;
 	}
 }
