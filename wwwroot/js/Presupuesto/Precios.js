@@ -6,6 +6,7 @@ function AgregarRow() {
 
     let NewIngridient = newRow.getElementsByClassName("NewIngridient")[0];
     NewIngridient.onclick = function () { SwitchIngredintInput(newRow) }
+    newRow.getElementsByClassName("deleteBtn")[0].onclick = function () { newRow.remove(); };
     MainTable.getElementsByTagName("tbody")[0].appendChild(newRow);
 }
 
@@ -21,6 +22,7 @@ function SwitchIngredintInput(row) {
     }
 }
 
+
 window.onload = function () {
     AgregarProductoBTN = document.getElementById("agregarProdcutoBtn");
     MainTable = document.getElementById("mainTable");
@@ -31,5 +33,6 @@ window.onload = function () {
 
     for (let row of TableBody.children) {
         row.getElementsByClassName("NewIngridient")[0].onclick = function () { SwitchIngredintInput(row) };
+        row.getElementsByClassName("deleteBtn")[0].onclick = function () { row.remove();  };
     }
 }
