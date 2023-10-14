@@ -12,20 +12,36 @@
 </div>
 
 <div class="container-fluid">
+	<div class="form-check form-switch">
+		<label for="editToggle">Editar Precios</label>
+		<input class="form-check-input" type="checkbox" role="switch" id="editToggle">
+	</div>
+
 	<table id="mainTable" class="table table-hover">
 		<thead>
 			<tr>
-				<th scope="col">Nuevo</th>
+				<th scope="col" class="editPrecios" hidden>Nuevo</th>
 				<th scope="col" class="col-4 text-center">Tipo</th>
 				<th scope="col" class="col-4 text-center">Marca</th>
 				<th scope="col" class="col-2 text-center">Presentación (ml)</th>
 				<th scope="col" class="col-2 text-center">Precio</th>
-				<th> </th>
+				<th class="editPrecios" hidden> </th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="viewPrecios">
 			@foreach (var p in Model.precios)
 			{
+				<tr>
+					<td class="text-center">@Model.GetIngridientName(p.IngredienteId)</td>
+					<td class="text-center">@p.Marca</td>
+					<td class="text-center">@p.Presentacion ml</td>
+					<td class="text-center">$@p.Costo</td>
+				</tr>
+			}
+		<tbody />
+		<tbody class="editPrecios" hidden>
+				@foreach (var p in Model.precios)
+				{
 				<tr>
 					<td>
 						<div class="form-check form-switch">
@@ -34,17 +50,17 @@
 					</td>
 					<td>
 						<select class="form-select IngridientSelector" aria-label="Selector de tipo de ingrediente IngridientSelector">
-							@foreach (var i in Model.ingredientes)
-							{
-								@if (p.IngredienteId == i.id)
+								@foreach (var i in Model.ingredientes)
 								{
+									@if (p.IngredienteId == i.id)
+									{
 									<option value=@i.name selected>@i.name</option>
-								}
-								else
-								{
+									}
+									else
+									{
 									<option value=@i.name>@i.name</option>
+									}
 								}
-							}
 						</select>
 						<input required placeholder="Ingrediente" name="IngredienteName" value="@(Model.GetIngridientName(p.IngredienteId))" class="form-control IngridientInput" hidden />
 					</td>
@@ -53,7 +69,7 @@
 					<td>$@p.Costo</td>
 					<td><span role="button" class="deleteBtn"><i class="bi-trash text-danger"></i></span></td>
 				</tr>
-			}
+				}
 			<tr class="nuevoProducto" hidden>
 				<td>
 					<div class="form-check form-switch">
@@ -62,10 +78,10 @@
 				</td>
 				<td>
 					<select class="form-select IngridientSelector" aria-label="Selector de tipo de ingrediente">
-						@foreach (var i in Model.ingredientes)
-						{
+							@foreach (var i in Model.ingredientes)
+							{
 							<option value=@i.name>@i.name</option>
-						}
+							}
 					</select>
 					<input required placeholder="Ingrediente" name="IngredienteName" values="@(Model.ingredientes.FirstOrDefault().name)" class="form-control IngridientInput" hidden />
 				</td>
@@ -86,5 +102,5 @@
 			</tr>
 		</tbody>
 	</table>
-	<button class="btn btn-primary" id="agregarProdcutoBtn">Agregar prodcuto</button>
+	<button class="btn btn-primary editPrecios" id="agregarProdcutoBtn" hidden>Agregar prodcuto</button>
 </div>
