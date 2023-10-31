@@ -19,5 +19,8 @@ namespace EstimadorBM.Controllers
 
 		[HttpGet]
 		public IEnumerable<Precio> GetAll(int proveedorId) => precioService.GetPrecios(proveedorId);
+
+		[HttpPost]
+		public void SetPrecios([FromBody]List<Precio> precio) => precioService.SetPrecios(precio);
 	}
 }
