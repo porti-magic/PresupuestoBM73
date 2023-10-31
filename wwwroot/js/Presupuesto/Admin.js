@@ -25,5 +25,5 @@ window.onload = function () {
     ProveedoresTABLE = document.getElementById("proveedoresTable");
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
 
-    crearProveedorBTN.onclick = function () { console.log("Test"); SaveNewProveedor(); }
+    crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
 }
