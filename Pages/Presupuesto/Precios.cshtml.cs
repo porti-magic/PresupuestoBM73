@@ -25,11 +25,13 @@ namespace EstimadorBM.Pages.Presupuesto
 		public DBProveedorService DBProveedorService { get; set; }
 		public DBPrecioService DBPrecioService { get; set; }
 		public string ProveedorName;
+		public int ProvedorID;
 		public string test = "lalal";
 		public void OnGet(int proveedorId)
 		{
 			ingredientes = DBIngredienteService.GetIngredientes();
 			ProveedorName = DBProveedorService.GetProveedores(proveedorId).First().Nombre;
+			ProvedorID = proveedorId;
 			precios = DBPrecioService.GetPrecios(proveedorId);
 			
 		}
