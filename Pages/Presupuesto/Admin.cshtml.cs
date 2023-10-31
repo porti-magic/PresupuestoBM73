@@ -10,16 +10,19 @@ namespace EstimadorBM.Pages.Presupuesto
 		private readonly ILogger<AdminModel> _logger;
 		public DBProveedorService DBProveedorService { get; set; }
         public IEnumerable<Proveedor> Proveedores { get; set; }
-
-        public AdminModel(ILogger<AdminModel> logger, DBProveedorService dBProveedorService)
+		public DBTragosService DBTragosService { get; set; }
+		public IEnumerable<Trago> Tragos { get; set; }
+        public AdminModel(ILogger<AdminModel> logger, DBProveedorService dBProveedorService, DBTragosService dBTragosService)
 		{
 			_logger = logger;
 			DBProveedorService = dBProveedorService;
+			this.DBTragosService = dBTragosService;
 		}
 
 		public void OnGet() 
 		{
 			Proveedores = DBProveedorService.GetProveedores(null);
+			Tragos = DBTragosService.GetTragos();
 		}
     }
 }

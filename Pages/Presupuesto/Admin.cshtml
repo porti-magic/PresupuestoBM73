@@ -7,37 +7,82 @@
 <script type="module" src="~/js/Presupuesto/Admin.js" asp-append-version="true"></script>
 
 <div class="container">
-	<div class="card">
-		<h5 class="card-header">Proveedores</h5>
-		<div class="card-body">
-			<div class="row">
-				<h5 class="col align-self-start card-title">Estado Actual</h5>
-				<button id="agregarProveedorBtn" class="col-auto align-self-end btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">Agregar proveedor</button>
+	<div class="accordion" id="accordion">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingProveedores">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseProveedores">
+					Proveedores
+				</button>
+			</h2>
+			<div id="collapseProveedores" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+				<div class="accordion-body">
+					<table id="proveedoresTable" class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Teléfono</th>
+								<th scope="col">Mail</th>
+								<th scope="col">Última Actualización</th>
+								<th scope="col"> </th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var p in Model.Proveedores)
+							{
+								<tr>
+									<td scope="row">@p.ID</td>
+									<td>@p.Nombre</td>
+									<td>@(p.Telefono?.ToString() ?? "No Disnible")</td>
+									<td>@(p.Mail ?? "No Disponible")</td>
+									<td>@p.LastUpdate</td>
+									<td><a href=@("Precios?proveedorId="+p.ID)>Editar datos</a></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+					<button id="agregarProveedorBtn" class="col-auto align-self-end btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">Agregar proveedor</button>
+				</div>
 			</div>
-			<table id="proveedoresTable" class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">ID</th>
-						<th scope="col">Nombre</th>
-						<th scope="col">Teléfono</th>
-						<th scope="col">Mail</th>
-						<th scope="col">Última Actualización</th>
-						<th scope="col"> </th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach(var p in Model.Proveedores){
-						<tr>
-							<td scope="row">@p.ID</td>
-							<td>@p.Nombre</td>
-							<td>@(p.Telefono?.ToString() ?? "No Disnible")</td>
-							<td>@(p.Mail??"No Disponible")</td>
-							<td>@p.LastUpdate</td>
-							<td><a href=@("Precios?proveedorId="+p.ID)>Editar datos</a></td>
-						</tr>
-					}
-				</tbody>
-			</table>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingTragos">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTragos" aria-expanded="false" aria-controls="collapseTragos">
+					Tragos
+				</button>
+			</h2>
+			<div id="collapseTragos" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+				<div class="accordion-body">
+					<table id="proveedoresTable" class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Disponible</th>
+								<th scope="col">Última Actualización</th>
+								<th scope="col"> </th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var t in Model.Tragos)
+							{
+								<tr>
+									<td scope="row">@t.ID</td>
+									<td>@t.Name</td>
+									<td>
+										<div class="form-check form-switch">
+											<input class="form-check-input NewIngridient" type="checkbox" role="switch" checked=@t.IsAvailable>
+										</div>
+									</td>
+									<td>N/A</td>
+									<td><a href=#>Editar</a></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+					<button id="agregarTragoBtn" class="col-auto align-self-end btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal">Agregar trago</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -52,7 +97,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form class ="form needs-validation" id="nuevoProveedorData" novalidate>
+				<form class="form needs-validation" id="nuevoProveedorData" novalidate>
 					<div class="form-floating mb-3">
 						<input form="nuevoProveedorData" required placeholder="Nombre" id="name" name="name" class="form-control" />
 						<label for="name" class="form-label">Nombre:</label>
