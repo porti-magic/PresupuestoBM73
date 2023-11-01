@@ -12,17 +12,24 @@ namespace EstimadorBM.Pages.Presupuesto
         public IEnumerable<Proveedor> Proveedores { get; set; }
 		public DBTragosService DBTragosService { get; set; }
 		public IEnumerable<Trago> Tragos { get; set; }
-        public AdminModel(ILogger<AdminModel> logger, DBProveedorService dBProveedorService, DBTragosService dBTragosService)
+		public IEnumerable<Ingrediente> Ingredientes { get; set; }
+		public DBIngredienteService DBIngredienteService { get; set; }
+		public AdminModel(ILogger<AdminModel> logger
+			,DBProveedorService dBProveedorService
+			,DBTragosService dBTragosService
+			,DBIngredienteService ingredienteService)
 		{
 			_logger = logger;
 			DBProveedorService = dBProveedorService;
-			this.DBTragosService = dBTragosService;
+			DBTragosService = dBTragosService;
+			DBIngredienteService = ingredienteService;
 		}
 
 		public void OnGet() 
 		{
 			Proveedores = DBProveedorService.GetProveedores(null);
 			Tragos = DBTragosService.GetTragos();
+			Ingredientes = DBIngredienteService.GetIngredientes();
 		}
     }
 }
