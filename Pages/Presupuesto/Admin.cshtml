@@ -7,16 +7,20 @@
 <script type="module" src="~/js/Presupuesto/Admin.js" asp-append-version="true"></script>
 
 <div class="container">
-	<div class="accordion" id="accordion">
-		<div class="accordion-item">
+	<button class="btn btn-primary btn-sm mb-2 accordion-toggle-all" aria-expanded="true" data-bs-target="accordion"></button>
+	<script>
+		
+	</script>
+	<div class="accordion accordion-flush" id="accordion">
+		<div class="accordion-item" data-bs-parent="accordion">
 			<h2 class="accordion-header" id="headingProveedores">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseProveedores">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="true" aria-controls="collapseProveedores">
 					Proveedores
 				</button>
 			</h2>
-			<div id="collapseProveedores" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+			<div id="collapseProveedores" class="accordion-collapse collapse show" aria-labelledby="headingOne">
 				<div class="accordion-body">
-					<table id="proveedoresTable" class="table table-hover">
+					<table id="proveedoresTable" class="table table-hover table-paginated" rowsPerPage="5" page="1">
 						<thead>
 							<tr>
 								<th scope="col">ID</th>
@@ -41,19 +45,21 @@
 							}
 						</tbody>
 					</table>
-					<button id="agregarProveedorBtn" class="col-auto align-self-end btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">Agregar proveedor</button>
+					<div class="row m-0 justify-content-between nav-container">
+						<button id="agregarProveedorBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">Agregar proveedor</button>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="accordion-item">
+		<div class="accordion-item" data-bs-parent="accordion">
 			<h2 class="accordion-header" id="headingTragos">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTragos" aria-expanded="false" aria-controls="collapseTragos">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTragos" aria-expanded="true" aria-controls="collapseTragos">
 					Tragos
 				</button>
 			</h2>
-			<div id="collapseTragos" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+			<div id="collapseTragos" class="accordion-collapse collapse show" aria-labelledby="headingOne">
 				<div class="accordion-body">
-					<table id="proveedoresTable" class="table table-hover">
+					<table id="proveedoresTable" class="table table-hover table-paginated" rowsPerPage="5" page="1">
 						<thead>
 							<tr>
 								<th scope="col">ID</th>
@@ -80,7 +86,9 @@
 							}
 						</tbody>
 					</table>
-					<button id="agregarTragoBtn" class="col-auto align-self-end btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal">Agregar trago</button>
+					<div class="row m-0 justify-content-between nav-container">
+						<button id="agregarTragoBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal">Agregar trago</button>
+					</div>
 				</div>
 			</div>
 		</div>
