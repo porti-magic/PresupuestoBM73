@@ -1,63 +1,37 @@
-﻿let AgregarProductoBTN, MainTable, nuevoProductRow, EditViewTableBody, EditModeToggleButton, saveBtn;
+﻿import { SetUp as AdvanceSelectorSetUp } from "../Elements/AdvanceSelector.js";
+
+let AgregarProductoBTN, MainTable, nuevoProductRow, EditViewTableBody, EditModeToggleButton, saveBtn;
 
 function AgregarRow() {
     var newRow = nuevoProductRow.cloneNode(true);
     newRow.removeAttribute("hidden");
 
-    let NewIngridient = newRow.getElementsByClassName("NewIngridient")[0];
-    NewIngridient.onclick = function () { SwitchIngredintInput(newRow) }
+    AdvanceSelectorSetUp(newRow.getElementsByClassName("AdvanceSelector-container")[0]);
     newRow.getElementsByClassName("deleteBtn")[0].onclick = function () { newRow.remove(); };
-    newRow.getElementsByClassName("IngridientSelector")[0].onclick = function () { AsignSelectorValue(newRow); }
     for (var input of newRow.getElementsByClassName("form-control")) {
-        if (input.name != "IngredienteName") {
+        if (input.name != "IngredienteMarca") {
             input.setAttribute("required", "");
         }
     }
-    AsignSelectorValue(newRow)
-    EditViewTableBody.insertBefore(newRow, nuevoProductRow);/* appendChild(newRow);*/
-}
-
-function SwitchIngredintInput(row) {
-    let NewIngridient = row.getElementsByClassName("NewIngridient")[0];
-    if (NewIngridient.checked) {
-        row.getElementsByClassName("IngridientInput")[0].removeAttribute("hidden");
-        row.getElementsByClassName("IngridientSelector")[0].setAttribute("hidden", "");
-    }
-    else {
-        row.getElementsByClassName("IngridientInput")[0].setAttribute("hidden", "");
-        row.getElementsByClassName("IngridientSelector")[0].removeAttribute("hidden");
-        let selector = row.getElementsByClassName("IngridientSelector")[0];
-        let input = row.getElementsByClassName("IngridientInput")[0];
-        input.value = selector.value;
-    }
-}
-
-function AsignSelectorValue(row) {
-    let selector = row.getElementsByClassName("IngridientSelector")[0];
-    let input = row.getElementsByClassName("IngridientInput")[0];
-    input.value = selector.value;
+    EditViewTableBody.insertBefore(newRow, nuevoProductRow);
 }
 
 function ToggleEditMode() {
-    let editPreciosTable, viewPreciosTable, nuevoColumnHeader;
+    let editPreciosTable, viewPreciosTable;
     editPreciosTable = document.getElementsByClassName("editPrecios");
     viewPreciosTable = document.getElementById("viewPrecios");
-    nuevoColumnHeader = document.getElementById("nuevoColumnHeader");
 
     if (EditModeToggleButton.checked) {
         for (var e of editPreciosTable) {
             e.removeAttribute("hidden");
         }
         viewPreciosTable.setAttribute("hidden", "");
-        nuevoColumnHeader.textContent = "Nuevo";
-
     }
     else {
         viewPreciosTable.removeAttribute("hidden");
         for (var e of editPreciosTable) {
             e.setAttribute("hidden", "");
         }
-        nuevoColumnHeader.textContent = "";
     }
 }
 
@@ -103,9 +77,7 @@ window.onload = function () {
     AgregarProductoBTN.onclick = function () { AgregarRow(); }
 
     for (let row of EditViewTableBody.children) {
-        row.getElementsByClassName("NewIngridient")[0].onclick = function () { SwitchIngredintInput(row) };
         row.getElementsByClassName("deleteBtn")[0].onclick = function () { row.remove(); };
-        row.getElementsByClassName("IngridientSelector")[0].onclick = function () { AsignSelectorValue(row); }
     }
 
     EditModeToggleButton.onclick = function () { ToggleEditMode() };

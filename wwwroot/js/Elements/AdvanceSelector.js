@@ -1,10 +1,14 @@
-﻿window.addEventListener('load', function () {
+﻿export function SetUp(selectorContainer) {
+    let selector = NewAdvancedSelector(selectorContainer);
+    selector.ToggleBtn.onclick = function () { SwitchInputMethod(selector) };
+    selector.DropdownSelector.onclick = function () { AsignSelectorValue(selector); }
+}
+
+window.addEventListener('load', function () {
     const AdvanceselectorContainers = document.getElementsByClassName('AdvanceSelector-container');
 
     for (let selectorContainer of AdvanceselectorContainers) {
-        let selector = NewAdvancedSelector(selectorContainer);
-        selector.ToggleBtn.onclick = function () { SwitchInputMethod(selector) };
-        selector.DropdownSelector.onclick = function () { AsignSelectorValue(selector); }
+        SetUp(selectorContainer);
     }
 });
 

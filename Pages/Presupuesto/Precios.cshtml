@@ -5,7 +5,7 @@
 	ViewData["Title"] = "Presupuestos 73 Precios";
 }
 
-<script src="~/js/Presupuesto/Precios.js"></script>
+<script type="module" src="~/js/Presupuesto/Precios.js"></script>
 
 <div class="container">
 	<h3>Precios en: @Model.ProveedorName</h3>
@@ -22,7 +22,6 @@
 		<table id="mainTable" class="table table-hover">
 			<thead>
 				<tr>
-					<th scope="col" class="col-1" id="nuevoColumnHeader"></th>
 					<th scope="col" class="col-3 text-center">Tipo</th>
 					<th scope="col" class="col-3 text-center">Marca</th>
 					<th scope="col" class="col-2 text-center">Presentación (ml)</th>
@@ -34,9 +33,7 @@
 				@foreach (var p in Model.precios)
 				{
 					<tr>
-
-						<td class="col-1"></td>
-						<td class="col-3">@p.IngredienteName</td>
+						<td class="col-3 text-center">@p.IngredienteName</td>
 						<td class="col-3 text-center">@p.Marca</td>
 						<td class="col-2 text-center">@p.Presentacion ml</td>
 						<td class="col-2 text-center">$@p.Costo</td>
@@ -50,26 +47,26 @@
 				@foreach (var p in Model.precios)
 				{
 					<tr>
-						<td class="col-1">
-							<div class="form-check form-switch">
-								<input form="preciosData" class="form-check-input NewIngridient" type="checkbox" role="switch" id="NewIngridient">
+						<td class="AdvanceSelector-container  d-flex align-content-center m-0 col-12">
+							<div class="form-check form-switch AdvanceSelector-toggle align-self-center">
+								<input form="preciosData" class="CustomInputToggle form-check-input" type="checkbox" role="switch" id="NewIngridient">
 							</div>
-						</td>
-						<td class="col-3 text-center">
-							<select class="form-select IngridientSelector" aria-label="Selector de tipo de ingrediente IngridientSelector">
-								@foreach (var i in Model.ingredientes)
-								{
-									@if (p.IngredienteName == i.name)
+							<div class="col-10 AdvanceSelector-input">
+								<select class="form-select AdvanceSelector-selector" aria-label="Selector de tipo de ingrediente IngridientSelector">
+									@foreach (var i in Model.ingredientes)
 									{
-										<option value=@i.name selected>@i.name</option>
+										@if (p.IngredienteName == i.name)
+										{
+											<option value=@i.name selected>@i.name</option>
+										}
+										else
+										{
+											<option value=@i.name>@i.name</option>
+										}
 									}
-									else
-									{
-										<option value=@i.name>@i.name</option>
-									}
-								}
-							</select>
-							<input form="preciosData" required placeholder="Ingrediente" name="IngredienteName" value="@(p.IngredienteName)" class="form-control IngridientInput" hidden />
+								</select>
+								<input form="preciosData" required placeholder="Ingrediente" name="IngredienteName" value="@(p.IngredienteName)" class="form-control AdvanceSelector-customInput" hidden />
+							</div>
 						</td>
 						<td class="col-3 text-center"><input required placeholder="Marca" name="IngredienteName" value=@(p.Marca) class="form-control MarcaInput" disabled /></td>
 						<td class="col-2 text-center">
@@ -88,21 +85,21 @@
 					</tr>
 				}
 				<tr class="nuevoProducto" hidden>
-					<td>
-						<div class="form-check form-switch">
-							<input class="form-check-input NewIngridient" type="checkbox" role="switch" id="NewIngridient">
+					<td class="AdvanceSelector-container  d-flex align-content-center m-0 col-12">
+						<div class="form-check form-switch AdvanceSelector-toggle align-self-center">
+							<input form="preciosData" class="CustomInputToggle form-check-input" type="checkbox" role="switch" id="NewIngridient">
+						</div>
+						<div class="col-10 AdvanceSelector-input">
+							<select class="form-select AdvanceSelector-selector" aria-label="Selector de tipo de ingrediente IngridientSelector">
+								@foreach (var i in Model.ingredientes)
+								{
+									<option value=@i.name>@i.name</option>
+								}
+							</select>
+							<input form="preciosData" required placeholder="Ingrediente" name="IngredienteName" value="@(Model.ingredientes.FirstOrDefault()?.name)" class="form-control AdvanceSelector-customInput" hidden />
 						</div>
 					</td>
-					<td>
-						<select class="form-select IngridientSelector" aria-label="Selector de tipo de ingrediente">
-							@foreach (var i in Model.ingredientes)
-							{
-								<option value=@i.name>@i.name</option>
-							}
-						</select>
-						<input form="preciosData" placeholder="Ingrediente" name="IngredienteName" values="@(Model.ingredientes.FirstOrDefault()?.name)" class="form-control IngridientInput" hidden />
-					</td>
-					<td><input form="preciosData" placeholder="Marca" name="IngredienteName" class="form-control MarcaInput" disabled /></td>
+					<td><input form="preciosData" placeholder="Marca" name="IngredienteMarca" class="form-control MarcaInput" disabled /></td>
 					<td>
 						<div class="input-group">
 							<input type="number" form="preciosData" name="Presentacion" class="form-control" step="1" />
