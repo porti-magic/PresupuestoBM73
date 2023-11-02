@@ -9,7 +9,7 @@
 <div class="container">
 	<button class="btn btn-primary btn-sm mb-2 accordion-toggle-all" aria-expanded="true" data-bs-target="accordion"></button>
 	<script>
-		
+
 	</script>
 	<div class="accordion accordion-flush" id="accordion">
 		<div class="accordion-item" data-bs-parent="accordion">
@@ -133,7 +133,7 @@
 
 <!--Modal Agegar trago-->
 <div class="modal" id="nuevoTragoModal" tabindex="-1" role="dialog" aria-labelledby="nuevoTragoModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="nuevoTragoModalLabel">Agregar trago</h5>
@@ -148,30 +148,34 @@
 					</div>
 					<div class="form-check form-switch">
 						<label for="isAvailable" class="form-check-label">Disponible</label>
-						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input" checked/>
+						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input" checked />
 					</div>
 					<table class="table table-hover">
 						<tr>
-							<th scope="col">Ingrediente</th>
-							<th scope="col">Cantidad</th>
+							<th scope="col" class="col-6">Ingrediente</th>
+							<th scope="col" class="col-6">Cantidad</th>
 						</tr>
-						<tr>
-							<td>
-								<select class="form-select IngridientSelector" aria-label="Selector de tipo de ingrediente">
-									@foreach (var i in Model.Ingredientes)
-									{
-										<option value=@i.name>@i.name</option>
-									}
-								</select>
-								<input form="nuevoTragoData" placeholder="Ingrediente" name="IngredienteName" values="@(Model.Ingredientes.FirstOrDefault()?.name)" class="form-control IngridientInput" hidden />
+						<tr class="row m-0 flex-nowrap">
+							<td class="AdvanceSelector-container d-flex align-content-center m-0 col-12">
+								<div class="form-check form-switch AdvanceSelector-toggle col-1 align-self-center">
+									<input form="nuevoTragoData" class="form-check-input CustomInputToggle" type="checkbox" role="switch" id="NewIngridient">
+								</div>
+								<div class="col-10 AdvanceSelector-input">
+									<select class="form-select AdvanceSelector-selector" aria-label="Selector de tipo de ingrediente IngridientSelector">
+										@foreach (var i in Model.Ingredientes)
+										{
+											<option value=@i.name>@i.name</option>
+										}
+									</select>
+									<input form="nuevoTragoData" required placeholder="Ingrediente" name="IngredienteName" value="@(Model.Ingredientes.FirstOrDefault()?.name)" class="form-control AdvanceSelector-customInput" hidden />
+								</div>
 							</td>
-							<td>
+							<td class="m-0 col-12">
 								<div class="input-group">
 									<input type="number" form="nuevoTragoData" name="Cantidad" class="form-control" min=0 step="0.25" />
 									<span class="input-group-text">Partes</span>
 								</div>
 							</td>
-						</tr>
 					</table>
 				</form>
 				<button type="button" class="btn btn-secondary" id="agregarIngredienteoBtn">Agregar ingredeinte</button>
