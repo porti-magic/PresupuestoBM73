@@ -34,18 +34,29 @@ function AddIngrediente() {
     lastIngridientRow.insertAdjacentElement('afterend', newRow);
 }
 
+function setTragoDisponebleLimitation() {
+    let TragoDisponibleToggle = document.querySelector("#isAvailabe");
+    if (document.querySelectorAll(".NewIngridientToggle:checked").length > 0) {
+        TragoDisponibleToggle.checked = false;
+        TragoDisponibleToggle.disabled = true;
+    }
+    else {
+        TragoDisponibleToggle.checked = true;
+        TragoDisponibleToggle.disabled = false;
+    }
+}
+
+
 window.onload = function () {
     let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles;
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
     AgregarIngredienteBtn = document.getElementById("agregarIngredienteoBtn");
-    newIngridientToggles = document.getElementsByClassName("NewIngridient");
+    newIngridientToggles = document.getElementsByClassName("NewIngridientToggle");
 
     crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
     AgregarIngredienteBtn.addEventListener("click", AddIngrediente);
 
     for (let toggle of newIngridientToggles) {
-        toggle.addEventListener("click",
-
-        )
+        toggle.addEventListener("change", setTragoDisponebleLimitation);
     }
 }
