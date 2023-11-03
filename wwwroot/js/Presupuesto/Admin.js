@@ -1,4 +1,4 @@
-﻿let ProveedoresTABLE, crearProveedorBTN;
+﻿import { SetUp as AdvanceSelectorSetUp } from "../Elements/AdvanceSelector.js";
 
 function SaveNewProveedor() {
     let form = document.getElementById("nuevoProveedorData");
@@ -21,9 +21,23 @@ function SaveNewProveedor() {
     }
 }
 
+function AddIngrediente()
+{
+    var ingridientRows = document.getElementsByClassName("IngredienteRow");
+    var lastIngridientRow = ingridientRows[ingridientRows.length - 1];
+    var newRow = lastIngridientRow.cloneNode(true);
+
+    AdvanceSelectorSetUp(newRow.getElementsByClassName("AdvanceSelector-container")[0])
+
+    lastIngridientRow.insertAdjacentElement('afterend', newRow);
+}
+
 window.onload = function () {
+    let ProveedoresTABLE, crearProveedorBTN, AgregarIngredienteBtn;
     ProveedoresTABLE = document.getElementById("proveedoresTable");
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
+    AgregarIngredienteBtn = document.getElementById("agregarIngredienteoBtn");
 
     crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
+    AgregarIngredienteBtn.addEventListener("click", AddIngrediente);
 }
