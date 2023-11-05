@@ -55,18 +55,18 @@ function SaveTrago() {
     if (form.checkValidity()) {
         let trago = {};
 
-        trago.TragoNombre = form.querySelector("#ingridientName").value;
-        trago.Disponible = form.querySelector("#isAvailabe").value;
+        trago.tragoNombre = form.querySelector("#ingridientName").value;
+        trago.disponible = form.querySelector("#isAvailabe").checked;
 
 
-        let nombres = [], cantidades = [];
+        let ingredientesString = "";
         for (let ingridient of form.querySelectorAll(".IngredienteRow")) {
-            nombres.push(ingridient.querySelector(".AdvanceSelector-customInput").value);
-            cantidades.push(ingridient.querySelector(".nuevoTragoCantidad").value);
+            ingredientesString += ingridient.querySelector(".AdvanceSelector-customInput").value;
+            ingredientesString += ":"
+            ingredientesString += ingridient.querySelector(".nuevoTragoCantidad").value.replace(',', '.');
+            ingredientesString += ","
         }
-        trago.IngredientesNombres = nombres;
-        trago.IngredientesCantidad = cantidades;
-        trago.push(productData);
+        trago.ingredientesString = ingredientesString.slice(0, -1);
 
         const xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../Recetas");

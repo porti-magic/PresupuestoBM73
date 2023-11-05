@@ -2,6 +2,8 @@
     let selector = NewAdvancedSelector(selectorContainer);
     selector.ToggleBtn.onclick = function () { SwitchInputMethod(selector) };
     selector.DropdownSelector.onclick = function () { AsignSelectorValue(selector); }
+
+    AsignSelectorValue();
 }
 
 window.addEventListener('load', function () {
