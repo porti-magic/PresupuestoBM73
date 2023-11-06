@@ -1,9 +1,15 @@
-﻿export function SetUp(selectorContainer) {
+﻿export function SetUp(selectorContainer, optionSelected ="") {
     let selector = NewAdvancedSelector(selectorContainer);
     selector.ToggleBtn.onclick = function () { SwitchInputMethod(selector) };
     selector.DropdownSelector.onclick = function () { AsignSelectorValue(selector); }
 
-    AsignSelectorValue();
+    for (var options of selector.DropdownSelector.getElementsByTagName("option")) {
+        if (options.value == optionSelected) {
+            options.setAttribute("selected","")
+        }
+    }
+
+    AsignSelectorValue(selector);
 }
 
 window.addEventListener('load', function () {

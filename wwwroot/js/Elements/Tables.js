@@ -79,6 +79,14 @@ function showTableRows(table) {
         items[items.length - 1].classList.remove("disabled");
     }
 
+    for (var i = 1; i < items.length - 1; i++) {
+        if (i == currentPage) {
+            items[i].classList.add("active");
+        }
+        else
+            items[i].classList.remove("active");
+    }
+
 }
 function CreatePaginationItem(table, innetText, value) {
     var listItem = document.createElement("li");
