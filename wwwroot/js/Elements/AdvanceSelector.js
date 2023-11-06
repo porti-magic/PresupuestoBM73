@@ -5,8 +5,12 @@
 
     for (var options of selector.DropdownSelector.getElementsByTagName("option")) {
         if (options.value == optionSelected) {
-            options.setAttribute("selected","")
+            options.setAttribute("selected", "");
         }
+        else {
+            options.removeAttribute("selected");
+        }
+
     }
 
     AsignSelectorValue(selector);

@@ -24,7 +24,7 @@ function SaveNewProveedor() {
     }
 }
 
-function AddIngrediente(name="", value) {
+function AddIngrediente(name="", value=0) {
     var ingridientRows = document.getElementsByClassName("IngredienteRow");
     var lastIngridientRow = ingridientRows[ingridientRows.length - 1];
     var newRow = lastIngridientRow.cloneNode(true);
@@ -84,44 +84,59 @@ function SaveTrago() {
 }
 
 function setUpNewRecipeModal(event) {
-    // Button that triggered the modal
     var button = event.relatedTarget
-    // Extract info from data-bs-* attributes
     var name = button.dataset.bsName; 
-    var isAvailabe = button.dataset.bsAvailable;
-    // If necessary, you could initiate an AJAX request here
-    // and then do the updating in a callback.
-    var xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var myArr = JSON.parse(this.responseText);
-            console.log(myArr);
+    if ("" != name) {
+        var isAvailabe = button.dataset.bsAvailable;
+        var xmlhttp = new XMLHttpRequest();
 
-            for (var ingridient of myArr.ingredientesString.split(",")) {
-                var name = ingridient.split(":")[0];
-                var amount = Number(ingridient.split(":")[1]);
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                console.log(myArr);
 
-                AddIngrediente(name, amount);
+                for (var ingridient of myArr.ingredientesString.split(",")) {
+                    var name = ingridient.split(":")[0];
+                    var amount = Number(ingridient.split(":")[1]);
 
+                    AddIngrediente(name, amount);
+
+                }
+                DeleteIngridient(0);
             }
-            DeleteIngridient(0);
-        }
-    };
-    xmlhttp.open("GET", `../Recetas?name=${name}`, true);
-    xmlhttp.send();
-    // Update the modal's content.
-    var nameField = document.querySelector('#ingridientName');
-    var isAvailableToggleBtn = document.querySelector("#isAvailabe");
+        };
+        xmlhttp.open("GET", `../Recetas?name=${name}`, true);
+        xmlhttp.send();
 
-    nameField.value = name ?? "";
-    isAvailableToggleBtn.checked = isAvailabe == "True";
+        var nameField = document.querySelector('#ingridientName');
+        var isAvailableToggleBtn = document.querySelector("#isAvailabe");
+
+        nameField.value = name ?? "";
+        isAvailableToggleBtn.checked = isAvailabe == "True";
+    }
 }
 
 function DeleteIngridient(index) {
     var tbody = document.querySelector("#newIngridientTbody")
     var ingridientRows = tbody.getElementsByClassName("IngredienteRow");
     tbody.removeChild(ingridientRows[index]);
+}
+
+function CloseAgregarTragoModal() {
+    AddIngrediente();
+    let rows = document.querySelectorAll(".IngredienteRow");
+    for (let i = 0; i < rows.length-1; i++) {
+        DeleteIngridient(0);
+    }
+
+    let form = document.getElementById("nuevoTragoData");
+    form.classList.remove('was-validated');
+
+    var nameField = document.querySelector('#ingridientName');
+    var isAvailableToggleBtn = document.querySelector("#isAvailabe");
+    nameField.value ="";
+    isAvailableToggleBtn.checked = "True";
 }
 
 window.onload = function () {
@@ -141,6 +156,6 @@ window.onload = function () {
         toggle.addEventListener("change", setTragoDisponebleLimitation);
     }
 
-
     agregarTragoModal.addEventListener('show.bs.modal', setUpNewRecipeModal);
+    agregarTragoModal.addEventListener('hidden.bs.modal', CloseAgregarTragoModal);
 }
