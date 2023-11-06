@@ -8,9 +8,6 @@
 
 <div class="container">
 	<button class="btn btn-primary btn-sm mb-2 accordion-toggle-all" aria-expanded="true" data-bs-target="accordion"></button>
-	<script>
-
-	</script>
 	<div class="accordion accordion-flush" id="accordion">
 		<div class="accordion-item" data-bs-parent="accordion">
 			<h2 class="accordion-header" id="headingProveedores">
@@ -81,13 +78,13 @@
 										</div>
 									</td>
 									<td>N/A</td>
-									<td><a href=#>Editar</a></td>
+									<td><span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal" data-bs-available=@t.IsAvailable data-bs-name="@t.Name"><i class="bi bi-pencil-square text-primary"></i></span></td>
 								</tr>
 							}
 						</tbody>
 					</table>
 					<div class="row m-0 justify-content-between nav-container">
-						<button id="agregarTragoBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal">Agregar trago</button>
+						<button id="agregarTragoBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-available="True" data-bs-target="#nuevoTragoModal" data-bs-name="">Agregar trago</button>
 					</div>
 				</div>
 			</div>
@@ -148,7 +145,7 @@
 					</div>
 					<div class="form-check form-switch">
 						<label for="isAvailable" class="form-check-label">Disponible</label>
-						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input" checked />
+						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input"/>
 					</div>
 					<table class="table table-hover">
 						<thead>
@@ -157,7 +154,7 @@
 								<th scope="col" class="col-6">Cantidad</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="newIngridientTbody">
 							<tr class="row m-0 flex-nowrap IngredienteRow">
 								<td class="AdvanceSelector-container d-flex align-content-center m-0 col-12">
 									<div class="form-check form-switch AdvanceSelector-toggle col-1 align-self-center">
