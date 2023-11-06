@@ -150,10 +150,10 @@ function SetUpEliminarTragoConfirmationModal(event){
 
 function EliminarTrago(event) {
     var button = event.target;
-    var id = button.dataset.bsId;
+    var id =  button.dataset.bsId;
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "../Recetas");
+    xhttp.open("DELETE", `../Recetas?id=${id}`);
 
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -162,7 +162,7 @@ function EliminarTrago(event) {
     };
 
 
-    xhttp.send(id);
+    xhttp.send();
 }
 
 window.onload = function () {

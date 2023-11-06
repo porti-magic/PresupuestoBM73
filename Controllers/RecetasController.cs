@@ -1,6 +1,7 @@
 ﻿using EstimadorBM.Models;
 using EstimadorBM.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace EstimadorBM.Controllers
 {
@@ -22,6 +23,9 @@ namespace EstimadorBM.Controllers
 
 		[HttpGet]
 		public Receta GetReceta(string name) => RecetaService.GetReceta(name);
+
+		[HttpDelete]
+		public void DeleteReceta(int Id) => RecetaService.DeleteReceta(Id);
 	}
 }
 

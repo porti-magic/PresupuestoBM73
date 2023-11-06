@@ -1,5 +1,6 @@
 ﻿using EstimadorBM.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace EstimadorBM.Services
 {
@@ -30,6 +31,11 @@ namespace EstimadorBM.Services
             string param = $"@nombre = '{tragoNombre}', @disponible = {(disponible? 1 : 0)}, @ingredientes = '{string.Join(",", ingredientesNombres)}', @cantidades = '{cantidades}'";
 
 			_ =context.Database.SqlQueryRaw<int>($"exec dbo.Set_Receta {param}").ToArray();
+		}
+
+		public void DeleteReceta(object id)
+		{
+			_ = context.Database.SqlQueryRaw<int>($"exec dbo.Delete_Receta @id={id}").ToArray();
 		}
 	}
 }
