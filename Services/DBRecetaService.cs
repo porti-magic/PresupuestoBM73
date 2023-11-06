@@ -14,6 +14,12 @@ namespace EstimadorBM.Services
 		public EstimatorBMContext context { get; set; }
 		public IWebHostEnvironment hostEnvironment { get; set; }
 
+		public Receta GetReceta(string name)
+		{
+			var res = context.Recetas.FromSqlRaw($"exec dbo.Get_Receta @name = {name}").ToArray();
+			return res.Single();
+		}
+
 		public void UpdateReceta(string tragoNombre, bool disponible, string[] ingredientesNombres, decimal[] ingredientesCantidades)
 		{
 			string cantidades = ingredientesCantidades[0].ToString().Replace(",", ".");

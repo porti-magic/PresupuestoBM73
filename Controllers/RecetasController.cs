@@ -19,6 +19,9 @@ namespace EstimadorBM.Controllers
 
 		[HttpPost]
 		public void UpdateReceta([FromBody] Receta receta) => RecetaService.UpdateReceta(receta.TragoNombre, receta.Disponible, receta.Ingredientes.Keys.ToArray(), receta.Ingredientes.Values.ToArray());
+
+		[HttpGet]
+		public Receta GetReceta(string name) => RecetaService.GetReceta(name);
 	}
 }
 

@@ -22,6 +22,5 @@ namespace EstimadorBM.Models
 				Ingredientes.Add(splited[0],Convert.ToDecimal(splited[1].Replace(".", ",")));
             }
         }
-
 	}
 }
