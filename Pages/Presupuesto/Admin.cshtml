@@ -78,7 +78,14 @@
 										</div>
 									</td>
 									<td>N/A</td>
-									<td><span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal" data-bs-available=@t.IsAvailable data-bs-name="@t.Name"><i class="bi bi-pencil-square text-primary"></i></span></td>
+									<td>
+										<span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal" data-bs-available=@t.IsAvailable data-bs-name="@t.Name">
+											<i class="bi bi-pencil-square text-primary"></i>
+										</span>
+										<span role="button" class="deleteTragoBtn" data-bs-name="@t.Name" data-bs-id="@t.ID" data-bs-toggle="modal" data-bs-target="#eliminarTragoConfirmation">
+											<i class="bi-trash text-danger"></i>
+										</span>
+									</td>
 								</tr>
 							}
 						</tbody>
@@ -184,6 +191,25 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 				<button type="button" class="btn btn-primary" id="crearTragoBtn">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Eliminar Trago confirmation modal-->
+<div class="modal fade" id="eliminarTragoConfirmation" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			@* <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div> *@
+			<div class="modal-body">
+				<p>eliminar el trago "<b id="elimnarTragoName"></b>"</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" id="eliminarTrago" class="btn btn-primary">Eliminar</button>
 			</div>
 		</div>
 	</div>

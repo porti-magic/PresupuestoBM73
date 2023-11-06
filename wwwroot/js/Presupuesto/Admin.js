@@ -139,14 +139,41 @@ function CloseAgregarTragoModal() {
     isAvailableToggleBtn.checked = "True";
 }
 
+function SetUpEliminarTragoConfirmationModal(event){
+    var button = event.relatedTarget
+    var name = button.dataset.bsName;
+    var id = button.dataset.bsId;
+
+    document.querySelector("#elimnarTragoName").innerHTML = name;
+    document.querySelector("#eliminarTrago").setAttribute("data-bs-id", id);
+}
+
+function EliminarTrago(event) {
+    var button = event.target;
+    var id = button.dataset.bsId;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "../Recetas");
+
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            window.location.reload();
+        }
+    };
+
+
+    xhttp.send(id);
+}
+
 window.onload = function () {
-    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal;
+    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation;
 
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
     AgregarIngredienteBtn = document.getElementById("agregarIngredienteoBtn");
     newIngridientToggles = document.getElementsByClassName("NewIngridientToggle");
     crearTragoBtn = document.querySelector("#crearTragoBtn");
     agregarTragoModal = document.getElementById('nuevoTragoModal')
+    eliminarTragoConfirmation = document.querySelector("#eliminarTragoConfirmation");
 
     crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
     AgregarIngredienteBtn.addEventListener("click", AddIngrediente);
@@ -158,4 +185,8 @@ window.onload = function () {
 
     agregarTragoModal.addEventListener('show.bs.modal', setUpNewRecipeModal);
     agregarTragoModal.addEventListener('hidden.bs.modal', CloseAgregarTragoModal);
+
+    eliminarTragoConfirmation.addEventListener('show.bs.modal', SetUpEliminarTragoConfirmationModal);
+    document.querySelector("#eliminarTrago").addEventListener('click', EliminarTrago);
+
 }
