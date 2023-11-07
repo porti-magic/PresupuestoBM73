@@ -1,0 +1,35 @@
+﻿@page
+@model AdminModel
+@{
+	ViewData["Title"] = "Presupuestos 73 Admin";
+}
+
+<div class="container">
+	<button class="btn btn-primary btn-sm mb-2 accordion-toggle-all" aria-expanded="true" data-bs-target="accordion"></button>
+	<div class="accordion accordion-flush" id="accordion">
+		<div class="accordion-item" data-bs-parent="accordion">
+			<h2 class="accordion-header" id="headingProveedores">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProveedores" aria-expanded="true" aria-controls="collapseProveedores">
+					Proveedores
+				</button>
+			</h2>
+			<div id="collapseProveedores" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+				<div class="accordion-body">
+					<partial name="admin/ProveedoresGeneralInfo"></partial>
+				</div>
+			</div>
+		</div>
+		<div class="accordion-item" data-bs-parent="accordion">
+			<h2 class="accordion-header" id="headingTragos">
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTragos" aria-expanded="true" aria-controls="collapseTragos">
+					Tragos
+				</button>
+			</h2>
+			<div id="collapseTragos" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+				<div class="accordion-body">
+					<partial name="admin/Recetas"></partial>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

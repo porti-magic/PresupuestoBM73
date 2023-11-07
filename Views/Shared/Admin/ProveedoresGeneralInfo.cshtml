@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using EstimadorBM.Services
+@using Microsoft.AspNetCore.Components.Web
+@inject DBProveedorService proveedores
+@{
+}
+
+<script type="module" src="~/js/Admin/ProveedoresGeneralInfo.js" asp-append-version="true"></script>
+
+<table id="proveedoresTable" class="table table-hover table-paginated" rowsPerPage="5" page="1">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Teléfono</th>
+			<th scope="col">Mail</th>
+			<th scope="col">Última Actualización</th>
+			<th scope="col"> </th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var p in proveedores.GetProveedores(null))
+		{
+			<tr>
+				<td scope="row">@p.ID</td>
+				<td>@p.Nombre</td>
+				<td>@(p.Telefono?.ToString() ?? "No Disnible")</td>
+				<td>@(p.Mail ?? "No Disponible")</td>
+				<td>@p.LastUpdate</td>
+				<td><a href=@("Admin/Precios?proveedorId="+p.ID)>Editar datos</a></td>
+			</tr>
+		}
+	</tbody>
+</table>
+<div class="row m-0 justify-content-between nav-container">
+	<button id="agregarProveedorBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#nuevoProveedorModal">Agregar proveedor</button>
+</div>
+
+<!--Modal-->
+<div class="modal" id="nuevoProveedorModal" tabindex="-1" role="dialog" aria-labelledby="nuevoProveedorModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="nuevoProveedorModalLabel">Agregar proveedor</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class="form needs-validation" id="nuevoProveedorData" novalidate>
+					<div class="form-floating mb-3">
+						<input form="nuevoProveedorData" required placeholder="Nombre" id="name" name="name" class="form-control" />
+						<label for="name" class="form-label">Nombre:</label>
+						<div class="invalid-feedback">Por favor ingrse el nombre.</div>
+					</div>
+					<div class="form-floating mb-3">
+						<input form="nuevoProveedorData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" class="form-control" />
+						<label for="email" class="form-label">Mail</label>
+						<div class="invalid-feedback">Por favor ingrse el mail.</div>
+					</div>
+					<div class="form-floating mb-3">
+						<input form="nuevoProveedorData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" class="form-control" />
+						<label for="phone" class="form-label">Teléfono</label>
+						<div class="invalid-feedback">Por favor un telefono sin codgo de area.</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="crearProveedorBtn">Guardar</button>
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,28 +1,6 @@
 ﻿import { SetUp as AdvanceSelectorSetUp } from "../Elements/AdvanceSelector.js";
 
-function SaveNewProveedor() {
-    let form = document.getElementById("nuevoProveedorData");
-    form.classList.add('was-validated')
-
-    if (form.checkValidity()) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "../Proveedores");
-
-        let ProveedorData = {};
-        ProveedorData.Nombre = document.getElementById('name').value;
-        ProveedorData.Mail = document.getElementById('email').value;
-        ProveedorData.Telefono = Number(document.getElementById('phone').value);
-
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                window.location.reload();
-            }
-        }
-
-        xhttp.send(JSON.stringify(ProveedorData));
-    }
-}
+let AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation, activeTragoToggles, deleteIngredienteBtn;
 
 function AddIngrediente(name = "", value = 0) {
     var ingridientRows = document.getElementsByClassName("IngredienteRow");
@@ -200,10 +178,9 @@ function ToggleActiveTrago(event) {
     xhttp.send(JSON.stringify(data));
 }
 
-window.onload = function () {
-    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation, activeTragoToggles, deleteIngredienteBtn;
+window.addEventListener('load', function () {InicializeVariables(); SetUpEventHanddlers();});
 
-    crearProveedorBTN = document.getElementById("crearProveedorBtn");
+function InicializeVariables() {
     AgregarIngredienteBtn = document.getElementById("agregarIngredienteoBtn");
     newIngridientToggles = document.getElementsByClassName("NewIngridientToggle");
     crearTragoBtn = document.querySelector("#crearTragoBtn");
@@ -211,8 +188,9 @@ window.onload = function () {
     eliminarTragoConfirmation = document.querySelector("#eliminarTragoConfirmation");
     activeTragoToggles = document.querySelectorAll(".activeTragoToggle");
     deleteIngredienteBtn = document.querySelectorAll(".deleteIngredienteBtn");
+}
 
-    crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
+function SetUpEventHanddlers() {
     AgregarIngredienteBtn.addEventListener("click", AddIngrediente);
     crearTragoBtn.addEventListener("click", SaveTrago);
 
