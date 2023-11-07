@@ -1,4 +1,4 @@
-﻿import { SetUp as AdvanceSelectorSetUp } from "../Elements/AdvanceSelector.js";
+﻿import { SetUp as AdvanceSelectorSetUp, NewAdvancedSelector } from "../Elements/AdvanceSelector.js";
 
 let AgregarProductoBTN, MainTable, nuevoProductRow, EditViewTableBody, EditModeToggleButton, saveBtn;
 
@@ -44,12 +44,13 @@ function SavePrecios() {
         for (var product of document.querySelectorAll('#editPreciosTbody > tr:not(:last-child)')) {
             let productData = {};
             let children = product.children;
-            productData.IngredienteName = children[1].children[1].value;
+            let AS = NewAdvancedSelector(children[0]);
+            productData.IngredienteName = AS.CustomInput.value;
             productData.ProveedorId = proveedorID.innerText;
-            productData.Marca = children[2].children[0].value;
-            productData.Presentacion = children[3].children[0].children[0].value;
-            productData.Costo = children[4].children[0].children[1].value.replace(',','.');
-            productData.IsNew = children[0].children[0].children[0].checked;
+            productData.Marca = children[1].children[0].value;
+            productData.Presentacion = children[2].children[0].children[0].value;
+            productData.Costo = children[3].children[0].children[1].value.replace(',', '.');
+            productData.IsNew = AS.ToggleBtn.checked;
             productos.push(productData);
         }
         const xhttp = new XMLHttpRequest();
