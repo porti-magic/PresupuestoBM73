@@ -43,7 +43,7 @@ function AsignSelectorValue(selector)
     selector.CustomInput.value = selector.DropdownSelector.value;
 }
 
-function NewAdvancedSelector(AdvanceselectorContainer)
+export function NewAdvancedSelector(AdvanceselectorContainer)
 {
     let AdvanceSelector = {};
 
