@@ -74,7 +74,7 @@
 									<td>@t.Name</td>
 									<td>
 										<div class="form-check form-switch">
-											<input class="form-check-input" type="checkbox" role="switch" checked=@t.IsAvailable>
+											<input class="form-check-input activeTragoToggle" type="checkbox" role="switch" checked=@t.IsAvailable data-bs-id="@t.ID" data-bs-name="@t.Name">
 										</div>
 									</td>
 									<td>N/A</td>
@@ -200,10 +200,6 @@
 <div class="modal fade" id="eliminarTragoConfirmation" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			@* <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div> *@
 			<div class="modal-body">
 				<p>eliminar el trago "<b id="elimnarTragoName"></b>"</p>
 			</div>

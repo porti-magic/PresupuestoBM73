@@ -161,12 +161,32 @@ function EliminarTrago(event) {
         }
     };
 
-
     xhttp.send();
 }
 
+function ToggleActiveTrago(event) {
+    var button = event.target;
+    var data = {}
+    data.ID = Number(button.dataset.bsId);
+    data.Name = button.dataset.bsName;
+    data.IsAvailable = button.checked;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", `../Tragos`);
+
+
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            window.location.reload();
+        }
+    };
+
+    xhttp.send(JSON.stringify(data));
+}
+
 window.onload = function () {
-    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation;
+    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation, activeTragoToggles;
 
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
     AgregarIngredienteBtn = document.getElementById("agregarIngredienteoBtn");
@@ -174,6 +194,7 @@ window.onload = function () {
     crearTragoBtn = document.querySelector("#crearTragoBtn");
     agregarTragoModal = document.getElementById('nuevoTragoModal')
     eliminarTragoConfirmation = document.querySelector("#eliminarTragoConfirmation");
+    activeTragoToggles = document.querySelectorAll(".activeTragoToggle");
 
     crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
     AgregarIngredienteBtn.addEventListener("click", AddIngrediente);
@@ -188,5 +209,9 @@ window.onload = function () {
 
     eliminarTragoConfirmation.addEventListener('show.bs.modal', SetUpEliminarTragoConfirmationModal);
     document.querySelector("#eliminarTrago").addEventListener('click', EliminarTrago);
+
+    for (var t of activeTragoToggles) {
+        t.addEventListener('change', ToggleActiveTrago);
+    }
 
 }

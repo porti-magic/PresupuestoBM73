@@ -18,7 +18,11 @@ namespace EstimadorBM.Controllers
         public DBTragosService TragosService { get; }
         public EstimatorBMContext Context { get; }
 
-        [HttpGet]
+
+		[HttpPost]
+		public void SetTragostatus([FromBody] Trago trago) => TragosService.SetStatus(trago.ID, trago.IsAvailable);
+
+		[HttpGet]
         public IEnumerable<Trago> Get() => TragosService.GetTragos();
     }
 }
