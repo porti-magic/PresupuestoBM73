@@ -152,13 +152,14 @@
 					</div>
 					<div class="form-check form-switch">
 						<label for="isAvailable" class="form-check-label">Disponible</label>
-						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input"/>
+						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input" />
 					</div>
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th scope="col" class="col-6">Ingrediente</th>
-								<th scope="col" class="col-6">Cantidad</th>
+								<th scope="col" class="col-8">Ingrediente</th>
+								<th scope="col" class="col-3">Cantidad</th>
+								<th class="col-1"> </th>
 							</tr>
 						</thead>
 						<tbody id="newIngridientTbody">
@@ -167,7 +168,7 @@
 									<div class="form-check form-switch AdvanceSelector-toggle col-1 align-self-center">
 										<input form="nuevoTragoData" class="form-check-input CustomInputToggle NewIngridientToggle" type="checkbox" role="switch">
 									</div>
-									<div class="col-10 AdvanceSelector-input">
+									<div class="col-11 AdvanceSelector-input">
 										<select class="form-select AdvanceSelector-selector" aria-label="Selector de tipo de ingrediente IngridientSelector">
 											@foreach (var i in Model.Ingredientes)
 											{
@@ -177,12 +178,18 @@
 										<input form="nuevoTragoData" required placeholder="Ingrediente" name="IngredienteName" value="@(Model.Ingredientes.FirstOrDefault()?.name)" class="form-control AdvanceSelector-customInput" hidden />
 									</div>
 								</td>
-								<td class="m-0 col-12">
+								<td class="m-0 col-5">
 									<div class="input-group">
 										<input type="number" form="nuevoTragoData" name="Cantidad" class="form-control nuevoTragoCantidad" required min=0 step="0.01" />
 										<span class="input-group-text">Partes</span>
 									</div>
 								</td>
+								<td class="m-0 col-1 d-flex justify-content-center align-content-center">
+									<span role="button" class="align-self-center" data-bs-index=0>
+										<i class="bi-trash text-danger deleteIngredienteBtn" data-bs-index=0></i>
+									</span>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</form>

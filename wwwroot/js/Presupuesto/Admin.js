@@ -24,7 +24,7 @@ function SaveNewProveedor() {
     }
 }
 
-function AddIngrediente(name="", value=0) {
+function AddIngrediente(name = "", value = 0) {
     var ingridientRows = document.getElementsByClassName("IngredienteRow");
     var lastIngridientRow = ingridientRows[ingridientRows.length - 1];
     var newRow = lastIngridientRow.cloneNode(true);
@@ -32,6 +32,9 @@ function AddIngrediente(name="", value=0) {
     AdvanceSelectorSetUp(newRow.getElementsByClassName("AdvanceSelector-container",)[0], name);
     newRow.querySelector(".NewIngridientToggle").addEventListener("change", setTragoDisponebleLimitation);
     newRow.querySelector(".nuevoTragoCantidad").value = value;
+    var trashIcon = newRow.querySelector(".deleteIngredienteBtn");
+    trashIcon.dataset.bsIndex = ingridientRows.length;
+    trashIcon.addEventListener('click', DeleteIngridient);
 
     lastIngridientRow.insertAdjacentElement('afterend', newRow);
 }
@@ -85,7 +88,7 @@ function SaveTrago() {
 
 function setUpNewRecipeModal(event) {
     var button = event.relatedTarget
-    var name = button.dataset.bsName; 
+    var name = button.dataset.bsName;
 
     if ("" != name) {
         var isAvailabe = button.dataset.bsAvailable;
@@ -103,7 +106,7 @@ function setUpNewRecipeModal(event) {
                     AddIngrediente(name, amount);
 
                 }
-                DeleteIngridient(0);
+                DeleteIngridientByIndex(0);
             }
         };
         xmlhttp.open("GET", `../Recetas?name=${name}`, true);
@@ -117,17 +120,29 @@ function setUpNewRecipeModal(event) {
     }
 }
 
-function DeleteIngridient(index) {
+function DeleteIngridientByIndex(index) {
     var tbody = document.querySelector("#newIngridientTbody")
     var ingridientRows = tbody.getElementsByClassName("IngredienteRow");
     tbody.removeChild(ingridientRows[index]);
+
+    var ingridientRows = document.getElementsByClassName("IngredienteRow");
+    for (var i = index; i < ingridientRows.length; i++) {
+        ingridientRows[i].querySelector(".deleteIngredienteBtn").dataset.bsIndex = i
+    }
+}
+
+function DeleteIngridient(event) {
+    var button = event.target;
+    var index = button.dataset.bsIndex;
+
+    DeleteIngridientByIndex(index);
 }
 
 function CloseAgregarTragoModal() {
     AddIngrediente();
     let rows = document.querySelectorAll(".IngredienteRow");
-    for (let i = 0; i < rows.length-1; i++) {
-        DeleteIngridient(0);
+    for (let i = 0; i < rows.length - 1; i++) {
+        DeleteIngridientByIndex(0);
     }
 
     let form = document.getElementById("nuevoTragoData");
@@ -135,11 +150,11 @@ function CloseAgregarTragoModal() {
 
     var nameField = document.querySelector('#ingridientName');
     var isAvailableToggleBtn = document.querySelector("#isAvailabe");
-    nameField.value ="";
+    nameField.value = "";
     isAvailableToggleBtn.checked = "True";
 }
 
-function SetUpEliminarTragoConfirmationModal(event){
+function SetUpEliminarTragoConfirmationModal(event) {
     var button = event.relatedTarget
     var name = button.dataset.bsName;
     var id = button.dataset.bsId;
@@ -150,7 +165,7 @@ function SetUpEliminarTragoConfirmationModal(event){
 
 function EliminarTrago(event) {
     var button = event.target;
-    var id =  button.dataset.bsId;
+    var id = button.dataset.bsId;
 
     var xhttp = new XMLHttpRequest();
     xhttp.open("DELETE", `../Recetas?id=${id}`);
@@ -186,7 +201,7 @@ function ToggleActiveTrago(event) {
 }
 
 window.onload = function () {
-    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation, activeTragoToggles;
+    let crearProveedorBTN, AgregarIngredienteBtn, newIngridientToggles, crearTragoBtn, agregarTragoModal, eliminarTragoConfirmation, activeTragoToggles, deleteIngredienteBtn;
 
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
     AgregarIngredienteBtn = document.getElementById("agregarIngredienteoBtn");
@@ -195,6 +210,7 @@ window.onload = function () {
     agregarTragoModal = document.getElementById('nuevoTragoModal')
     eliminarTragoConfirmation = document.querySelector("#eliminarTragoConfirmation");
     activeTragoToggles = document.querySelectorAll(".activeTragoToggle");
+    deleteIngredienteBtn = document.querySelectorAll(".deleteIngredienteBtn");
 
     crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
     AgregarIngredienteBtn.addEventListener("click", AddIngrediente);
@@ -214,4 +230,7 @@ window.onload = function () {
         t.addEventListener('change', ToggleActiveTrago);
     }
 
+    for (var b of deleteIngredienteBtn) {
+        b.addEventListener('click', DeleteIngridient);
+    }
 }
