@@ -1,15 +1,16 @@
-﻿let ProveedoresTABLE, crearProveedorBTN;
-
-function SaveNewProveedor() {
+﻿function SaveNewProveedor() {
     let form = document.getElementById("nuevoProveedorData");
     form.classList.add('was-validated')
+
     if (form.checkValidity()) {
         const xhttp = new XMLHttpRequest();
         xhttp.open("POST", "../Proveedores");
-        let test = {};
-        test.Nombre = document.getElementById('name').value;
-        test.Mail = document.getElementById('email').value;
-        test.Telefono = Number(document.getElementById('phone').value);
+
+        let ProveedorData = {};
+        ProveedorData.Nombre = document.getElementById('name').value;
+        ProveedorData.Mail = document.getElementById('email').value;
+        ProveedorData.Telefono = Number(document.getElementById('phone').value);
+
         xhttp.setRequestHeader("Content-type", "application/json");
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -17,13 +18,14 @@ function SaveNewProveedor() {
             }
         }
 
-        xhttp.send(JSON.stringify(test));
+        xhttp.send(JSON.stringify(ProveedorData));
     }
 }
 
-window.onload = function () {
-    ProveedoresTABLE = document.getElementById("proveedoresTable");
+window.addEventListener('load', function () {
+    let crearProveedorBTN;
+
     crearProveedorBTN = document.getElementById("crearProveedorBtn");
 
-    crearProveedorBTN.onclick = function () { SaveNewProveedor(); }
-}
+    crearProveedorBTN.addEventListener('click', SaveNewProveedor);
+});

@@ -1,0 +1,134 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using EstimadorBM.Services
+@using EstimadorBM.Models
+@inject DBIngredienteService DBIngredienteService;
+@inject DBTragosService DBTragosService;
+@{
+	IEnumerable<Ingrediente> ingredientes = DBIngredienteService.GetIngredientes();
+	IEnumerable<Trago> tragos = DBTragosService.GetTragos();
+}
+
+<script type="module" src="~/js/Admin/Recetas.js" asp-append-version="true"></script>
+
+<table id="proveedoresTable" class="table table-hover table-paginated" rowsPerPage="5" page="1">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Disponible</th>
+			<th scope="col">Última Actualización</th>
+			<th scope="col"> </th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var t in tragos)
+		{
+			<tr>
+				<td scope="row">@t.ID</td>
+				<td>@t.Name</td>
+				<td>
+					<div class="form-check form-switch">
+						<input class="form-check-input activeTragoToggle" type="checkbox" role="switch" checked=@t.IsAvailable data-bs-id="@t.ID" data-bs-name="@t.Name">
+					</div>
+				</td>
+				<td>N/A</td>
+				<td>
+					<span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevoTragoModal" data-bs-available=@t.IsAvailable data-bs-name="@t.Name">
+						<i class="bi bi-pencil-square text-primary"></i>
+					</span>
+					<span role="button" class="deleteTragoBtn" data-bs-name="@t.Name" data-bs-id="@t.ID" data-bs-toggle="modal" data-bs-target="#eliminarTragoConfirmation">
+						<i class="bi-trash text-danger"></i>
+					</span>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<div class="row m-0 justify-content-between nav-container">
+	<button id="agregarTragoBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-available="True" data-bs-target="#nuevoTragoModal" data-bs-name="">Agregar trago</button>
+</div>
+
+<!--Modal Agegar trago-->
+<div class="modal" id="nuevoTragoModal" tabindex="-1" role="dialog" aria-labelledby="nuevoTragoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="nuevoTragoModalLabel">Agregar trago</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class="form needs-validation" id="nuevoTragoData" novalidate>
+					<div class="form-floating mb-3">
+						<input form="nuevoTragoData" required placeholder="Nombre" id="ingridientName" name="name" class="form-control" />
+						<label for="ingridientName" class="form-label">Nombre:</label>
+						<div class="invalid-feedback">Por favor ingrse el nombre.</div>
+					</div>
+					<div class="form-check form-switch">
+						<label for="isAvailable" class="form-check-label">Disponible</label>
+						<input form="nuevoTragoData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input" />
+					</div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col" class="col-8">Ingrediente</th>
+								<th scope="col" class="col-3">Cantidad</th>
+								<th class="col-1"> </th>
+							</tr>
+						</thead>
+						<tbody id="newIngridientTbody">
+							<tr class="row m-0 flex-nowrap IngredienteRow">
+								<td class="AdvanceSelector-container d-flex align-content-center m-0 col-12">
+									<div class="form-check form-switch AdvanceSelector-toggle col-1 align-self-center">
+										<input form="nuevoTragoData" class="form-check-input CustomInputToggle NewIngridientToggle" type="checkbox" role="switch">
+									</div>
+									<div class="col-11 AdvanceSelector-input">
+										<select class="form-select AdvanceSelector-selector" aria-label="Selector de tipo de ingrediente IngridientSelector">
+											@foreach (var i in ingredientes)
+											{
+												<option value=@i.name>@i.name</option>
+											}
+										</select>
+										<input form="nuevoTragoData" required placeholder="Ingrediente" name="IngredienteName" value="@(ingredientes.FirstOrDefault()?.name)" class="form-control AdvanceSelector-customInput" hidden />
+									</div>
+								</td>
+								<td class="m-0 col-5">
+									<div class="input-group">
+										<input type="number" form="nuevoTragoData" name="Cantidad" class="form-control nuevoTragoCantidad" required min=0 step="0.01" />
+										<span class="input-group-text">Partes</span>
+									</div>
+								</td>
+								<td class="m-0 col-1 d-flex justify-content-center align-content-center">
+									<span role="button" class="align-self-center" data-bs-index=0>
+										<i class="bi-trash text-danger deleteIngredienteBtn" data-bs-index=0></i>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				<button type="button" class="btn btn-secondary" id="agregarIngredienteoBtn">Agregar ingredeinte</button>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="crearTragoBtn">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Eliminar Trago confirmation modal-->
+<div class="modal fade" id="eliminarTragoConfirmation" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p>eliminar el trago "<b id="elimnarTragoName"></b>"</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" id="eliminarTrago" class="btn btn-primary">Eliminar</button>
+			</div>
+		</div>
+	</div>
+</div>

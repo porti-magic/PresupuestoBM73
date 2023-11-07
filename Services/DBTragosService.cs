@@ -19,5 +19,10 @@ namespace EstimadorBM.Services
 			var resul = _context.Tragos.ToArray();
 			return resul;
 		}
+
+		public void SetStatus(int id, bool status)
+		{
+			_ = _context.Database.SqlQueryRaw<int>($"exec dbo.Set_TragoStatus @id={id}, @status={status}").ToArray();
+		}
 	}
 }
