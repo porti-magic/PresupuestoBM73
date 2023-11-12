@@ -25,5 +25,12 @@ namespace EstimadorBM.Controllers
 
 		[HttpGet()]
 		public IEnumerable<Carta> Get() => CartaService.GetCartas();
+
+		[HttpPost]
+		public void SetCarta([FromBody] Carta carta) => CartaService.SetCarta(carta.ID, carta.Name, carta.DrinksString);
+
+
+		[HttpDelete]
+		public void DeleteCarta(int id) => CartaService.DeleteCarta(id);
 	}
 }
