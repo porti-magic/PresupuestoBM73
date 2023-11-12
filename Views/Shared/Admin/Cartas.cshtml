@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using EstimadorBM.Models
+@using EstimadorBM.Services
+@inject DBCartaService CartasService;
+@inject DBTragosService TragosService;
+@{
+	IEnumerable<Carta> Cartas = CartasService.GetCartas();
+	IEnumerable<Trago> Tragos = TragosService.GetTragos();
+
+}
+
+<script type="module" src="~/js/Admin/Cartas.js" asp-append-version="true"></script>
+
+<table id="proveedoresTable" class="table table-hover table-paginated" rowsPerPage="5" page="1">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Disponible</th>
+			<th scope="col">Última Actualización</th>
+			<th scope="col"> </th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var C in Cartas)
+		{
+			@if (C.ID != 3) // Exclude the custom carta
+			{
+				<tr>
+					<td scope="row">@C.ID</td>
+					<td>@C.Name</td>
+					<td>
+						<div class="form-check form-switch">
+							<input class="form-check-input activeTragoToggle" type="checkbox" role="switch" data-bs-id="@C.ID" data-bs-name="@C.Name" @*checked=@C.IsAvailable*@>
+						</div>
+					</td>
+					<td>N/A</td>
+					<td>
+						<span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevaCartaModal" data-bs-name="@C.Name" data-bs-id="@C.ID" data-bs-drinksStrings="@C.DrinksString" @*data-bs-available=@C.IsAvailable*@>
+							<i class="bi bi-pencil-square text-primary"></i>
+						</span>
+						<span role="button" class="deleteTragoBtn" data-bs-name="@C.Name" data-bs-id="@C.ID" data-bs-toggle="modal" data-bs-target="#eliminarTragoConfirmation">
+							<i class="bi-trash text-danger"></i>
+						</span>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+<div class="row m-0 justify-content-between nav-container">
+	<nav aria-label="Page navigation" class="col-auto paginationPlaceHolder"></nav>
+	<button id="agregarTragoBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-available="True" data-bs-target="#nuevaCartaModal" data-bs-name="" data-bs-id=0 data-bs-drinksStrings="">Agregar carta</button>
+</div>
+
+<!--Modal Agegar carta-->
+<div class="modal" id="nuevaCartaModal" tabindex="-1" role="dialog" aria-labelledby="nuevaCartaModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="nuevaCartaModalLabel">Agregar carta</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class="form needs-validation" id="nuevaCartaData" novalidate>
+					<div class="form-floating mb-3">
+						<input form="nuevaCartaData" required placeholder="Nombre" id="cartaName" name="name" class="form-control" />
+						<label for="cartaName" class="form-label">Nombre:</label>
+						<div class="invalid-feedback">Por favor ingrse el nombre.</div>
+					</div>
+					<div class="form-check form-switch">
+						<label for="isAvailable" class="form-check-label">Disponible</label>
+						<input form="nuevaCartaData" type="checkbox" role="switch" id="isAvailabe" name="isAvailable" class="form-check-input" />
+					</div>
+					<div class="form-floating mb-3">
+						<input form="nuevaCartaData" placeholder="Descripción" id="cartaDescription" name="description" class="form-control" />
+						<label for="cartaDescription" class="form-label">Descripción:</label>
+						<div class="invalid-feedback">Por favor ingrese la descripción.</div>
+					</div>
+					<h6 class="card-subtitle mb-2 text-muted">Seleccione los tragos</h6>
+					<div class="row" id="TragosList">
+						@foreach (var trago in Tragos)
+						{
+							<div class="col-auto TragoSelector" id="@trago.ID">
+								<input class="selectTrago" id=@(trago.Name + "selector") type="checkbox" value="@trago.ID" @* checked="@Model.cartas.First().Drinks.Contains(trago.ID)" *@ />
+								<label for=@(trago.Name + "Selector") class="form-label">@trago.Name</label>
+							</div>
+						}
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="crearCartaBtn">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Eliminar Carta confirmation modal-->
+<div class="modal fade" id="EliminarCartaConfirmation" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p>eliminar la "<b id="elimnarCartaName"></b>"</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" id="EliminarCarta" class="btn btn-primary" data-bs-id=0>Eliminar</button>
+			</div>
+		</div>
+	</div>
+</div>
