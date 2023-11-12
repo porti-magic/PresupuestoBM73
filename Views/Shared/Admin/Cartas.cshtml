@@ -41,7 +41,7 @@
 						<span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevaCartaModal" data-bs-name="@C.Name" data-bs-id="@C.ID" data-bs-drinksStrings="@C.DrinksString" @*data-bs-available=@C.IsAvailable*@>
 							<i class="bi bi-pencil-square text-primary"></i>
 						</span>
-						<span role="button" class="deleteTragoBtn" data-bs-name="@C.Name" data-bs-id="@C.ID" data-bs-toggle="modal" data-bs-target="#eliminarTragoConfirmation">
+						<span role="button" class="deleteCartaBtn" data-bs-name="@C.Name" data-bs-id="@C.ID" data-bs-toggle="modal" data-bs-target="#EliminarCartaConfirmation">
 							<i class="bi-trash text-danger"></i>
 						</span>
 					</td>
@@ -101,10 +101,13 @@
 
 <!--Eliminar Carta confirmation modal-->
 <div class="modal fade" id="EliminarCartaConfirmation" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Eliminar Carta</h5>
+			</div>
 			<div class="modal-body">
-				<p>eliminar la "<b id="elimnarCartaName"></b>"</p>
+				<p>Desea eliminar la carta "<b id="elimnarCartaName"></b>"?</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
