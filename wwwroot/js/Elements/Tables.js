@@ -44,7 +44,13 @@ function createPaginationLinks(table) {
             navContainer.classList.add('nav-container');
             table.parentNode.insertBefore(navContainer, table.nextElementSibling);
         }
+
         navContainer.insertBefore(paginationNav, table.nextElementSibling.children[0]);
+
+        var paginationPlaceHolder = table.nextElementSibling.querySelector(".paginationPlaceHolder");
+        if (paginationPlaceHolder) {
+            table.nextElementSibling.removeChild(paginationPlaceHolder);
+        }
 
         showTableRows(table);
     }
