@@ -35,7 +35,7 @@ namespace EstimadorBM.Services
 
 		public void DeleteReceta(object id)
 		{
-			_ = context.Database.SqlQueryRaw<int>($"exec dbo.Delete_Receta @id={id}").ToArray();
+			_ = context.Database.SqlQueryRaw<int>($"exec dbo.Delete_Trago @id={id}").ToArray();
 		}
 	}
 }
