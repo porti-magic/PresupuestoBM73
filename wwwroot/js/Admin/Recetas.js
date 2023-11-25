@@ -7,7 +7,7 @@ function AddIngrediente(name = "", value = 0) {
     var lastIngridientRow = ingridientRows[ingridientRows.length - 1];
     var newRow = lastIngridientRow.cloneNode(true);
 
-    AdvanceSelectorSetUp(newRow.getElementsByClassName("AdvanceSelector-container",)[0], name);
+    AdvanceSelectorSetUp(newRow.getElementsByClassName("AdvanceSelector-container")[0], name);
     newRow.querySelector(".NewIngridientToggle").addEventListener("change", setTragoDisponebleLimitation);
     newRow.querySelector(".nuevoTragoCantidad").value = value;
     var trashIcon = newRow.querySelector(".deleteIngredienteBtn");
@@ -75,8 +75,6 @@ function setUpNewRecipeModal(event) {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var myArr = JSON.parse(this.responseText);
-                console.log(myArr);
-
                 for (var ingridient of myArr.ingredientesString.split(",")) {
                     var name = ingridient.split(":")[0];
                     var amount = Number(ingridient.split(":")[1]);
