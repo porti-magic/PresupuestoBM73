@@ -27,7 +27,7 @@ namespace EstimadorBM.Controllers
 		[HttpPost]
 		public void SetCosto([FromBody] OtrosCostos costo) => OtrosCostosService.SetCosto(costo.Id, costo.Name, costo.Presentacion, costo.Cost, costo.Personas, costo.AmountString, costo.HsString);
 		
-		//[HttpDelete]
-		//public void DeleteCarta(int id) => CartaService.DeleteCarta(id);
+		[HttpDelete]
+		public void DeleteCarta(int id) => OtrosCostosService.DeleteCosto(id);
 	}
 }

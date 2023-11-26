@@ -1,5 +1,6 @@
 ﻿using EstimadorBM.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EstimadorBM.Services
@@ -27,9 +28,14 @@ namespace EstimadorBM.Services
 		public void SetCosto(int Id, string Name, decimal Presentacion, decimal Cost, decimal Personas, string amountString, string hsString)
 		{
 			_= context.Database.SqlQueryRaw<int>(
-					"EXEC [dbo].[Set_OtherCost] @Id = {0}, @Name = {1}, @Presemtacion = {2}, @Costo = {3}, @Personas = {4}, @AmountString = {5}, @HsString = {6}"
+					"EXEC [dbo].[Set_OtherCost] @Id = {0}, @Name = {1}, @Presentacion = {2}, @Cost = {3}, @Personas = {4}, @AmountString = {5}, @HsString = {6}"
 					, Id, Name, Presentacion, Cost, Personas, amountString, hsString
 				).ToArray();
+		}
+
+		internal void DeleteCosto(int Id)
+		{
+			_ = context.Database.SqlQueryRaw<int>("EXEC [dbo].[Delete_OtherCost] @Id = {0}", Id).ToArray();
 		}
 	}
 }
