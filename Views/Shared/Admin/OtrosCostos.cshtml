@@ -1,0 +1,155 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using EstimadorBM.Services
+@using EstimadorBM.Models
+@inject DBOtrosCostosService DBOtrosCostosService;
+@{
+	IEnumerable<OtrosCostos> Costos = DBOtrosCostosService.GetCostos(null);
+}
+
+<script type="module" src="~/js/Admin/OtrosCostos.js" asp-append-version="true"></script>
+
+<table id="proveedoresTable" class="table table-hover table-paginated" rowsPerPage="5" page="1">
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nombre</th>
+			<th scope="col">Activo</th>
+			<th scope="col">PAX</th>
+			<th scope="col">Max Hs</th>
+			<th scope="col">Precio</th>
+			<th scope="col">Última Actualización</th>
+			<th scope="col"> </th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var c in Costos)
+		{
+			<tr>
+				<td scope="row">@c.Id</td>
+				<td>@c.Name</td>
+				<td>
+					<div class="form-check form-switch">
+						<input class="form-check-input activeCostoToggle" type="checkbox" role="switch" checked=@c.IsActive data-bs-id="@c.Id" data-bs-name="@c.Name">
+					</div>
+				</td>
+				<td>@c.Personas</td>
+				<td>@c.AmountByHs.Keys.Max()</td>
+				<td>$@c.Cost</td>
+				<td>N/A</td>
+				<td>
+					<span role="button" class="editBtn" data-bs-toggle="modal" data-bs-target="#nuevoCostoModal" data-bs-is-active=@c.IsActive data-bs-name="@c.Name" data-bs-id="@c.Id" data-bs-precio="@c.Cost" data-bs-presentacion="@c.Presentacion" data-bs-pax="@c.Personas" data-bs-amount-string="@c.AmountString" data-bs-hs-string="@c.HsString">
+						<i class="bi bi-pencil-square text-primary"></i>
+					</span>
+					<span role="button" class="deleteCostoBtn" data-bs-name="@c.Name" data-bs-id="@c.Id" data-bs-toggle="modal" data-bs-target="#eliminarCostoConfirmation">
+						<i class="bi-trash text-danger"></i>
+					</span>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<div class="row m-0 justify-content-between nav-container">
+	<button id="agregarCostoBtn" class="col-auto btn btn-primary" type="button" data-bs-toggle="modal" data-bs-is-active="True" data-bs-target="#nuevoCostoModal" data-bs-name="">Agregar Costo</button>
+</div>
+
+<!--Modal Agegar Costo-->
+<div class="modal" id="nuevoCostoModal" tabindex="-1" role="dialog" aria-labelledby="nuevoCostoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="nuevoCostoModalLabel">Agregar Costo</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class="form needs-validation row" id="nuevoCostoData" novalidate>
+					<div class="form-floating mb-3 col-10 align-self-center">
+						<input form="nuevoCostoData" required placeholder="Nombre" id="CostoName" name="name" class="form-control" />
+						<label for="CostoName" class="form-label">Nombre:</label>
+						<div class="invalid-feedback">Por favor ingrese el nombre.</div>
+					</div>
+					<div class="form-check form-switch col-2 align-self-center">
+						<label for="IsActive" class="form-check-label">Activo</label>
+						<input form="nuevoCostoData" type="checkbox" role="switch" id="isAvailabeOC" name="IsActive" class="form-check-input" />
+					</div>
+					<div class="flex-column col-6">
+						<div class="mb-3 me-2">
+							<label for="Precio" class="form-label m-0">Precio:</label>
+							<div class="input-group mb-3">
+								<span class="input-group-text">$</span>
+								<input form="nuevoCostoData" required type="number" id="Precio" name="Precio" class="form-control" step="0.01" />
+							</div>
+							<div class="invalid-feedback">Por favor ingrese el precio.</div>
+						</div>
+
+						<div class="mb-3 me-2">
+							<label for="presentacion" class="form-label m-0">Presentación:</label>
+							<input form="nuevoCostoData" required type="number" name="presentacion" id="presentacion" class="form-control" step="0.01" />
+							<div class="invalid-feedback">Por favor ingrese un valor.</div>
+						</div>
+
+						<div class="mb-3 me-2">
+							<label for="PAX" class="form-label m-0">PAX:</label>
+							<input form="nuevoCostoData" required type="number" name="PAX" id="PAX" class="form-control" step="0.01" />
+							<div class="invalid-feedback">Por favor ingrese un valor.</div>
+						</div>
+					</div>
+					<div class="flex-column col-6">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th scope="col" class="col-6">Cantidad</th>
+									<th scope="col" class="col-6">Max Hs</th>
+									<th class="col-1"> </th>
+								</tr>
+							</thead>
+							<tbody id="newCostoTbody">
+								<tr class="m-0 row flex-nowrap rangoRow">
+									<td class="m-0">
+										<input type="number" form="nuevoCostoData" name="Cantidad" class="form-control RangoCantidad" required min=1 step="0.01" />
+									</td>
+									<td class="m-0">
+										<div class="input-group">
+											<input type="number" form="nuevoCostoData" name="MaxHs" class="form-control rangoMaxHS" required min=1 step="0.01" />
+											<span class="input-group-text">Hs</span>
+										</div>
+									</td>
+									<td class="m-0 col-1 d-flex justify-content-center align-content-center">
+										<span role="button" class="align-self-center" data-bs-index=0>
+											<i class="bi-trash text-danger deleteRango" data-bs-index=0></i>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-secondary" id="agregarRangoBtn">Agregar rango</button>
+					</div>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="crearCostoBtn" data-bs-id="0" data-bs-is-active=@true>Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Eliminar Costo confirmation modal-->
+<div class="modal fade" id="eliminarCostoConfirmation" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Eliminar Costo</h5>
+			</div>
+			<div class="modal-body">
+				<p>Desea eliminar el Costo "<b id="elimnarCostoName"></b>"?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" id="eliminarCosto" class="btn btn-primary">Eliminar</button>
+			</div>
+		</div>
+	</div>
+</div>

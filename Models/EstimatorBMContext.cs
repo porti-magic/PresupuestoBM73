@@ -16,5 +16,6 @@ namespace EstimadorBM.Models
 		public DbSet<Precio> precios { get; set; }
 		public DbSet<Proveedor> Proveedores { get; set; }
 		public DbSet<Receta> Recetas { get; set; }
+		public DbSet<OtrosCostos> OtrosCostos { get;set; }
 	}
 }
