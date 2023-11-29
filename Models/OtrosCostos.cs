@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EstimadorBM.Models
 {
 	public class OtrosCostos
+
+
+
 	{
 		[Key]
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public decimal Presentacion { get; set; }
 		public decimal Cost { get; set; }
-		[NotMapped]
 		public bool IsActive { get; set; }
 		public decimal Personas { get; set; }
 		public string AmountString { get; set; }
@@ -18,12 +20,13 @@ namespace EstimadorBM.Models
 		[NotMapped]
 		public  Dictionary<decimal, decimal> AmountByHs { get; set; }
 
-		public OtrosCostos(int Id, string Name, decimal Presentacion, decimal Cost, decimal Personas, string AmountString, string HsString)
+		public OtrosCostos(int Id, string Name, decimal Presentacion, decimal Cost, bool IsActive, decimal Personas, string AmountString, string HsString)
 		{
 			this.Id = Id;
 			this.Name = Name;
 			this.Presentacion = Presentacion;
 			this.Cost = Math.Round(Cost,2);
+			this.IsActive = IsActive;
 			this.Personas = Personas;
 			this.AmountString = AmountString;
 			this.HsString = HsString;

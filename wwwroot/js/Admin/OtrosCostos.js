@@ -13,6 +13,7 @@ function SaveCosto(event) {
         Costo.Name = form.querySelector("#CostoName").value;
         Costo.Presentacion = Number(form.querySelector("#presentacion").value.replace(",","."));
         Costo.Cost = Number(form.querySelector("#Precio").value.replace(",", "."));
+        Costo.IsActive = form.querySelector("#isAvailabeOC").checked;
         Costo.Personas = Number(form.querySelector("#PAX").value.replace(",","."));
 
         var AmountString = ""
@@ -40,9 +41,27 @@ function SaveCosto(event) {
     }
 }
 
+function ToggleActiveCosto(event) {
+    var button = event.target;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", `../OtrosCostos/SetCostoStatus?id=${Number(button.dataset.bsId)}&isActive=${button.checked}`);
+
+
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            window.location.reload();
+        }
+    };
+
+    xhttp.send();
+}
+
 function setUpNewCostoModal(event) {
     var button = event.relatedTarget;
     var id = button.dataset.bsId;
+    var isActive = button.dataset.bsIsActive;
 
     if(id) {
         var name = button.dataset.bsName;
@@ -69,6 +88,9 @@ function setUpNewCostoModal(event) {
         }
         DeleteRangoByIndex(0);
     }
+
+    var isAvailableToggle = document.querySelector("#isAvailabeOC");
+    isAvailableToggle.checked = isActive == 'True';
 }
 
 function SetUpEliminarCostoConfirmationModal(event) {
@@ -167,4 +189,8 @@ function SetUpEventHanddlers() {
     document.querySelector("#eliminarCosto").addEventListener('click', EliminarCosto);
 
     agregarRangoBtn.addEventListener('click', AddRango);
+
+    for (var t of activeCostoToggle) {
+        t.addEventListener('change', ToggleActiveCosto);
+    }
 }

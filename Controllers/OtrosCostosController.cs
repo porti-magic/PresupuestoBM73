@@ -25,9 +25,13 @@ namespace EstimadorBM.Controllers
 		public IEnumerable<OtrosCostos> Get() => OtrosCostosService.GetCostos(null);
 
 		[HttpPost]
-		public void SetCosto([FromBody] OtrosCostos costo) => OtrosCostosService.SetCosto(costo.Id, costo.Name, costo.Presentacion, costo.Cost, costo.Personas, costo.AmountString, costo.HsString);
+		public void SetCosto([FromBody] OtrosCostos costo) => OtrosCostosService.SetCosto(costo.Id, costo.Name, costo.Presentacion, costo.Cost, costo.IsActive, costo.Personas, costo.AmountString, costo.HsString);
 		
 		[HttpDelete]
-		public void DeleteCarta(int id) => OtrosCostosService.DeleteCosto(id);
+		public void DeleteCosto(int id) => OtrosCostosService.DeleteCosto(id);
+
+		[HttpPost]
+		[Route("SetCostoStatus")]
+		public void SetStatus(int id, bool isActive) => OtrosCostosService.SetStatus(id, isActive);
 	}
 }

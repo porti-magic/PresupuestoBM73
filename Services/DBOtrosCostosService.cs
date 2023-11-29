@@ -25,17 +25,22 @@ namespace EstimadorBM.Services
 			return result;
 		}
 
-		public void SetCosto(int Id, string Name, decimal Presentacion, decimal Cost, decimal Personas, string amountString, string hsString)
+		public void SetCosto(int Id, string Name, decimal Presentacion, decimal Cost, bool isActive, decimal Personas, string amountString, string hsString)
 		{
 			_= context.Database.SqlQueryRaw<int>(
-					"EXEC [dbo].[Set_OtherCost] @Id = {0}, @Name = {1}, @Presentacion = {2}, @Cost = {3}, @Personas = {4}, @AmountString = {5}, @HsString = {6}"
-					, Id, Name, Presentacion, Cost, Personas, amountString, hsString
+					"EXEC [dbo].[Set_OtherCost] @Id = {0}, @Name = {1}, @Presentacion = {2}, @Cost = {3}, @IsActive = {4}, @Personas = {5}, @AmountString = {6}, @HsString = {7}"
+					, Id, Name, Presentacion, Cost, isActive, Personas, amountString, hsString
 				).ToArray();
 		}
 
 		internal void DeleteCosto(int Id)
 		{
 			_ = context.Database.SqlQueryRaw<int>("EXEC [dbo].[Delete_OtherCost] @Id = {0}", Id).ToArray();
+		}
+
+		internal void SetStatus(int id, bool isActive)
+		{
+			_ = context.Database.SqlQueryRaw<int>("EXEC [dbo].[Set_OtherCostStatus] @Id = {0}, @IsActive = {1}", id, isActive).ToArray();
 		}
 	}
 }
