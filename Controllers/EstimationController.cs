@@ -18,10 +18,7 @@ namespace EstimadorBM.Controllers
 
 		public EstimatorBMContext _cotext { get; }
 
-		//[HttpGet]
-		//public IEnumerable<Carta> Get() => CartaService.GetCartas();
-
-		[HttpGet]
-		public IEnumerable<Estimado> Get(int pleople, string drinks, decimal Duration) => EstimationService.GetEstimation(pleople, drinks, Duration);
+		[HttpPost]
+		public IEnumerable<Estimado> Post([FromBody]EstimationRequest E) => EstimationService.GetEstimation(E.StartDate, E.Duration, E.Pleople, E.EventType, E.MenueID, E.Drinks);
 	}
 }
