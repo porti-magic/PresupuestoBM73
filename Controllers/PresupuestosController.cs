@@ -27,9 +27,8 @@ namespace EstimadorBM.Controllers
 		public Presupuesto Get(int id) => PresupuestoService.GetPresupuesto(id);
 
 		[HttpPost]
-		public void CreatePresupuesto([FromBody] Presupuesto presupuesto) => PresupuestoService.CreatePresupuesto(presupuesto);
-			//Presupuesto p = new(test.ID, test.Fname, test.Lname, test.Email, test.Phone, test.Address, test.StartDate, test.EndDate, test.Persons, test.EventType, test.DrinksString, test.Menu, test.Min, test.Max);
-			//return p;
-		
+		public void CreatePresupuesto([FromBody] PresupuestoContactInfo contactInfo) => PresupuestoService.UpdatePresupuestoContactInfo(contactInfo);
+
+
 	}
 }

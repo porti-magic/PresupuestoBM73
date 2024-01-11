@@ -56,37 +56,45 @@ function GetEstimation() {
         }
     }
 
-    fetch(`Estimation?Pleople=${Persons.value}&Drinks=${selectedDrinks.toString()}&Duration=${Duration.value}`)
-        .then(response => response.json())
-        .then(data => {
-            Min = data[0].min;
-            Max = data[0].max;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "Estimation");
+    let Estiamtion = {};
+    Estiamtion.StartDate = new Date(document.getElementById('start').value);
+    Estiamtion.Duration = Duration.value;
+    Estiamtion.Pleople = Persons.value;
+    Estiamtion.EventType = document.getElementById('enventType').value;
+    Estiamtion.MenueID = CartaSelector.value;
+    Estiamtion.Drinks = GetDrinksString();
+
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.responseType = 'json';
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            let data = xhttp.response;
+            let Id = data[0].id;
+            let Min = data[0].min;
+            let Max = data[0].max;
+            submitBtn.dataset.bsId = Id;
             document.getElementById("TotalEstimado").innerHTML = `${Min.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })} - ${Max.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`;
             document.getElementById("EstimadoPAX").innerHTML = `(${(Min / Number(Persons.value)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }) } - ${(Max / Number(Persons.value)).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }) } por persona)`;
             DisplayCollapsable(document.getElementById("collapsePrecio"));
-            MenuAccordionBTN.removeAttribute("disabled");
-        })
-        .catch(error => console.error('Error:', error));
+            MenuAccordionBTN.removeAttribute("disabled")
+        }
+    }
+
+    xhttp.send(JSON.stringify(Estiamtion));
 }
 
 function CreatePresupuesto() {
     const xhttp = new XMLHttpRequest();
     xhttp.open("POST", "Presupuestos");
     let test = {};
-    test.iD = 1;
+    test.iD = submitBtn.dataset.bsId;
     test.fname = document.getElementById('fname').value;
     test.lname = document.getElementById('lname').value;
     test.email = document.getElementById('email').value;
-    test.phone = document.getElementById('phone').value;
+    test.phone = Number(document.getElementById('phone').value);
     test.address = document.getElementById('adress').value;
-    test.startDate = new Date(document.getElementById('start').value);
-    test.duration = Duration.value;
-    test.persons = Persons.value;
-    test.eventType = document.getElementById('enventType').value;
-    test.drinksString = GetDrinksString();
-    test.menu = CartaSelector.value;
-    test.min = Min;
-    test.max = Max;
 
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.onreadystatechange = function () {

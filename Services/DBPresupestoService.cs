@@ -29,12 +29,6 @@ namespace EstimadorBM.Services
 				throw new Exception($"Multiples presupuestos con id {id} encontrados");
 		}
 
-		public void CreatePresupuesto(Presupuesto presupuesto)
-		{
-			//string parameters = $"@Fname = {Fname}, @Lname = {Lname}, @Email = {email}, @Phone = {phone}, @Address = {address}, @StartDate = {starteDate}, @Endate = {endDate}, @Persons = {persons}, @EventType = {eventType}, @Menue = {menue}, @Drinks = {drinks}";
-			var result = context.Database.SqlQueryRaw<int>($"EXEC [dbo].[Create_Presupuesto] {presupuesto.ToParameters()}").ToArray();
-		}
-
 		public IEnumerable<PresupuestoGeneralInfo> GetGeneralInfos(string parameters = "")
 		{
 			
@@ -47,6 +41,12 @@ namespace EstimadorBM.Services
 		{
 			var res = context.FiltersData.FromSqlRaw("EXEC [dbo].[Get_Filters]");
 			return res;
+		}
+
+		public void UpdatePresupuestoContactInfo(PresupuestoContactInfo contactInfo)
+		{
+			string parms = $"@Id = {contactInfo.Id}, @Fname = '{contactInfo.fname}', @Lname = '{contactInfo.lname}', @Email = '{contactInfo.email}', @Phone = {contactInfo.phone}, @Address = '{contactInfo.address}'";
+			_ = context.Database.SqlQueryRaw<int>($"EXEC [dbo].[Update_PresupuestoContactInfo] {parms}").ToArray();
 		}
 	}
 }

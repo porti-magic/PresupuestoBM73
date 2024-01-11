@@ -14,10 +14,12 @@ namespace EstimadorBM.Services
 		public EstimatorBMContext _context { get; }
 		public IWebHostEnvironment HostingEnvironment { get; }
 
-		public IEnumerable<Estimado> GetEstimation(int Pleople, string Drinks, decimal Duration)
+		public IEnumerable<Estimado> GetEstimation(DateTime StartDate, decimal Duration, int Pleople, string EventType, int MenueID, string Drinks)
 		{
-			string parameters = $"@Personas = {Pleople}, @Drinks = '{Drinks}', @Duration = {Duration.ToString().Replace(',','.')}";
-			var resul = _context.Estimado.FromSqlRaw($"EXEC [dbo].[Get_Estimate] {parameters}").ToArray();
+			string parameters = 
+				$"@Startdate = '{StartDate}', @Duration = '{Duration.ToString().Replace(',', '.')}', @Persons = '{Pleople}', " +
+				$"@EventType = '{EventType}', @Menu = '{MenueID}', @Drinks = '{Drinks}'";
+			var resul = _context.Estimado.FromSqlRaw($"EXEC [dbo].[Create_PresupuestoNew] {parameters}").ToArray();
 			return resul;
 		}
 	}
