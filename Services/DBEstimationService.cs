@@ -17,7 +17,7 @@ namespace EstimadorBM.Services
 		public IEnumerable<Estimado> GetEstimation(DateTime StartDate, decimal Duration, int Pleople, string EventType, int MenueID, string Drinks)
 		{
 			string parameters = 
-				$"@Startdate = '{StartDate}', @Duration = '{Duration.ToString().Replace(',', '.')}', @Persons = '{Pleople}', " +
+				$"@Startdate = '{StartDate.ToString("s").Replace('T', ' ')}', @Duration = '{Duration.ToString().Replace(',', '.')}', @Persons = '{Pleople}', " +
 				$"@EventType = '{EventType}', @Menu = '{MenueID}', @Drinks = '{Drinks}'";
 			var resul = _context.Estimado.FromSqlRaw($"EXEC [dbo].[Create_PresupuestoNew] {parameters}").ToArray();
 			return resul;
