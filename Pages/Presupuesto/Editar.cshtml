@@ -7,10 +7,58 @@
 <link rel="stylesheet" href="~/css/Presupuesto/Editar.css" asp-append-version="true" />
 <script type="module" src="~/js/Presupuesto/Editar.js" asp-append-version="true"></script>
 
-<div id="Contact" class="container"> 
-	<h3>Contacto</h3>
-	<p><b>Nombre: </b>@Model.Presupuesto.Fname</p>
-	<p><b>Apellido: </b>@Model.Presupuesto.Lname</p>
-	<p><b>Mail: </b>@Model.Presupuesto.Email</p>
-	<p><b>Telefono: </b>@Model.Presupuesto.Phone</p>
+
+<div class="card text-center">
+	<div class="card-header ps-2 pe-2 border-bottom-0">
+		<ul class="nav nav-tabs card-header-tabs">
+			<li class="nav-item">
+				<a class="nav-link disabled" aria-current="true" href="#"></a>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link active" aria-current="true" href="#">General</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" href="#">Tragos</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" href="#">Costos</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" href="#">Resumen</button>
+			</li>
+		</ul>
+	</div>
+	<div class="card-body">
+		<form id="contactData" class="form disabled">
+			<div class="row">
+				<div class="form-floating mb-3 col-6">
+					<input form="contactData" required placeholder="Nombre" id="fname" name="Nombre" class="form-control" value=@Model.Presupuesto.Fname disabled readonly />
+					<label for="fname" class="form-label">Nombre:</label>
+					<div class="invalid-feedback">Por favor ingrese un nombre.</div>
+				</div>
+				<div class="form-floating mb-3 col-6">
+					<input form="contactData" required placeholder="Apellido" id="lname" name="Apellido" class="form-control" value="@Model.Presupuesto.Lname" disabled readonly />
+					<label for="lname" class="form-label">Apellido:</label>
+					<div class="invalid-feedback">Por favor ingrese un apellido.</div>
+				</div>
+				<div class="form-floating mb-3 col-6">
+					<input form="contactData" placeholder="ejemplo@email.com" type="email" id="email" name="Email" class="form-control" value="@Model.Presupuesto.Email" disabled readonly />
+					<label for="email" class="form-label">Mail</label>
+				</div>
+				<div class="form-floating mb-3 col-6">
+					<input form="contactData" required placeholder="12345678" title="Sin codigo de area" pattern="[0-9]{8}" type="tel" id="phone" name="Telefono" class="form-control" value="@Model.Presupuesto.Phone" disabled readonly />
+					<label for="phone" class="form-label">Teléfono</label>
+					<div class="invalid-feedback">Por favor un telefono sin codgo de area.</div>
+				</div>
+			</div>
+			<div class="col-12">
+				<button class="btn btn-primary " id="editBtn" type="button">Editar</button>
+				<button class="btn btn-primary " hidden id="submitBtn" data-bs-id=0 type="button">Guardar</button>
+			</div>
+			<div id="mensajePresupuesto" hidden class="alert alert-success">
+				¡Solicitud enviada exitosamente!
+			</div>
+
+		</form>
+	</div>
 </div>
